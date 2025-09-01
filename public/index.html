@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./css/styles.css" rel="stylesheet">
+    <title>Fun Note App</title>
+</head>
+<body class="antialiased md:subpixel-antialiased mx-auto w-full lg:w-5xl text-neutral-700 bg-neutral-100 px-2 md:px-5">
+<nav class="px-1 py-3 lg:pl-12 lg:pr-12 md:pt-6 flex flex-row place-content-between gap-y-2 text-base text-neutral-600">
+    <a href="/"
+       class="hover:underline hover:underline-offset-2 hover:decoration-2 text-base text-neutral-600 hover:bg-neutral-200 px-3 py-2 rounded-md font-medium">
+        <img src="/images/home.png" alt="Go to the home page">
+    </a>
+    <ul class="flex flex-row mt-1">
+        <li><a href="" class="hover:underline hover:underline-offset-2 hover:decoration-2 text-base text-neutral-600 hover:bg-neutral-200 px-3 py-2 rounded-md font-medium">Blog</a></li>
+        <li><a href="" class="hover:underline hover:underline-offset-2 hover:decoration-2 text-base text-neutral-600  hover:bg-neutral-200 px-3 py-2 rounded-md font-medium">About</a></li>
+    </ul>
+</nav>
+<div class="p-3 lg:px-12 mt-4 md:mt-0 lg:mb-8 lg:mt-4">
+    <header class="flex flex-col place-content-between gap-y-2 mt-2 text-center">
+        <h1 class="text-6xl font-bold py-3">
+            Fun Notes
+        </h1>
+        <div class="text-xl font-medium text-neutral-500 w-3/4 mx-auto text-center">
+            Don't just organise apps, create fun apps that help you out whenever you need them — even if you don't!
+        </div>
+        <div class="my-4 mx-auto">
+            <a href="/new.html" class="button create w-fit">
+                <img src="images/document-white.png"
+                     width="18"
+                     class="my-1"
+                     alt="Create a note">
+                <span class="px-2">Create a note</span>
+            </a>
+        </div>
+    </header>
+    <main class="pt-2">
+        <div id="no-notes" class="hidden text-center w-full my-6 px-3 py-5 bg-slate-50 rounded-lg shadow-xs shadow-purple-100 border border-purple-100 text-neutral-600">
+            You've not created any notes yet.
+        </div>
+        <div id="notes">
+            <!--
+            <div class="border border-neutral-200 rounded-lg bg-neutral-50 flex flex-col place-content-between">
+                <div class="p-7 pt-5 pb-6">
+                    <div class="flex flex-row gap-2 my-2 place-content-between items-center">
+                        <p class="text-sm mb-2 text-neutral-500 pt-2">21st Aug, 2025</p>
+                        <p class="text-sm text-neutral-500 py-0 px-2 border border-purple-200 bg-purple-100 rounded-full">Politics</p>
+                    </div>
+                    <h2 class="font-bold text-lg mb-2 leading-5 text-pretty">Outback kids suffer through two years with no local dentist</h2>
+                    <p class="text-neutral-600 max-h-50 text-ellipsis md:overflow-scroll">
+                        Whistleblower Richard Boyle has avoided convictions and a jail term for exposing aggressive debt collection practices at the Australian Taxation Office.
+                        Whistleblower Richard Boyle has avoided convictions and a jail term for exposing aggressive debt collection practices at the Australian Taxation Office.
+                    </p>
+                </div>
+                <div class="text-base mt-2 text-red-800 bg-neutral-100 p-5 border-t border-t-neutral-200 grid grid-cols-2 gap-2 justify-items-center">
+                    <a href="/new.html"
+                       class="bg-green-700 hover:bg-green-800 hover:drop-shadow-md text-white px-3 py-3 rounded-lg w-full text-center">edit</a>
+                    <a href="/new.html"
+                       class="bg-red-600 hover:bg-red-700 hover:drop-shadow-md text-white px-3 py-3 rounded-lg w-full text-center">delete</a>
+                </div>
+            </div>
+            <div class="border border-neutral-200 rounded-lg bg-neutral-50 flex flex-col place-content-between">
+                <div class="p-7 pt-5 pb-6">
+                    <div class="flex flex-row gap-2 my-2 place-content-between items-center">
+                        <p class="text-sm mb-2 text-neutral-500 pt-2">21st Aug, 2025</p>
+                        <p class="text-sm text-neutral-500 py-0 px-2 border border-purple-200 bg-purple-100 rounded-full">Politics</p>
+                    </div>
+                    <h2 class="font-bold text-lg mb-2 leading-5">Authorities work with social media influencers to curb drowning deaths</h2>
+                    <p class="text-neutral-600 max-h-50 text-ellipsis lg:overflow-scroll">
+                        Whistleblower Richard Boyle has avoided convictions and a jail term for exposing aggressive debt collection practices at the Australian Taxation Office.</p>
+                </div>
+                <div class="text-base mt-2 p-5 flex flex-row gap-2 justify-items-center">
+                    <a href="/new.html"
+                       class="bg-green-700 hover:bg-green-800 hover:drop-shadow-md text-white px-3 py-3 rounded-lg w-2/3 text-center">edit</a>
+                    <a href="/new.html"
+                       class="px-3 py-3 rounded-lg text-center text-red-700">delete</a>
+                </div>
+            </div>
+            <div class="border border-neutral-200 rounded-lg bg-neutral-50 flex flex-col place-content-between">
+                <div class="p-7 pt-5 pb-6">
+                    <div class="flex flex-row gap-2 my-2 place-content-between items-center">
+                        <p class="text-sm mb-2 text-neutral-500 pt-2">21st Aug, 2025</p>
+                        <p class="text-sm text-neutral-500 py-0 px-2 border border-purple-200 bg-purple-100 rounded-full">Politics</p>
+                    </div>
+                    <h2 class="font-bold text-lg mb-2 leading-5">Outback kids suffer through two years with no local dentist</h2>
+                    <p class="text-neutral-600 max-h-50 text-ellipsis lg:overflow-scroll">
+                        Whistleblower Richard Boyle has avoided convictions and a jail term for exposing aggressive debt collection practices at the Australian Taxation Office.</p>
+                </div>
+                <div class="text-base mt-2 text-red-800 bg-neutral-100 p-5 border-t border-t-neutral-200 flex flex-row gap-2 justify-items-center">
+                    <a href="/new.html"
+                       class="bg-green-700 hover:bg-green-800 hover:drop-shadow-md text-white px-3 py-3 rounded-lg w-2/3 text-center">edit</a>
+                    <a href="/new.html"
+                       class="px-3 py-3 rounded-lg text-center text-red-700">delete</a>
+                </div>
+            </div>
+            <div class="border border-neutral-200 rounded-lg bg-neutral-50 flex flex-col place-content-between">
+                <div class="p-7 pt-5 pb-6">
+                    <div class="flex flex-row gap-2 my-2 place-content-between items-center">
+                        <p class="text-sm mb-2 text-neutral-500 pt-2">21st Aug, 2025</p>
+                        <p class="text-sm text-neutral-500 py-0 px-2 border border-purple-200 bg-purple-100 rounded-full">Politics</p>
+                    </div>
+                    <h2 class="font-bold text-lg mb-2 leading-5">Outback kids suffer through two years with no local dentist</h2>
+                    <p class="text-neutral-600 max-h-50 text-ellipsis lg:overflow-scroll">
+                        Whistleblower Richard Boyle has avoided convictions and a jail term for exposing aggressive debt collection practices at the Australian Taxation Office.</p>
+                </div>
+                <div class="text-base mt-2 text-red-800 bg-neutral-100 p-5 border-t border-t-neutral-200 flex flex-row gap-2 justify-items-center">
+                    <a href="/new.html"
+                       class="bg-green-700 hover:bg-green-800 hover:drop-shadow-md text-white px-3 py-3 rounded-lg w-full text-center">edit</a>
+                    <a href="/new.html"
+                       class="px-3 py-3 rounded-lg text-center text-red-700 shrink">
+                        <img src="images/delete.png" width="24" alt="delete the note">
+                    </a>
+                </div>
+            </div>
+            <div class="border border-neutral-200 rounded-lg bg-neutral-50 flex flex-col place-content-between">
+                <div class="p-7 pt-5 pb-6">
+                    <div class="flex flex-row gap-2 my-2 place-content-between items-center">
+                        <p class="text-sm mb-2 text-neutral-500 pt-2">21st Aug, 2025</p>
+                        <p class="text-sm text-neutral-500 py-0 px-2 border border-purple-200 bg-purple-100 rounded-full">Politics</p>
+                    </div>
+                    <h2 class="font-bold text-lg mb-2 leading-5">Outback kids suffer through two years with no local dentist</h2>
+                    <p class="text-neutral-600 max-h-50 text-ellipsis lg:overflow-scroll">
+                        Whistleblower Richard Boyle has avoided convictions and a jail term for exposing aggressive debt collection practices at the Australian Taxation Office.</p>
+                </div>
+                <div class="text-base mt-2 text-red-800 bg-neutral-100 p-5 border-t border-t-neutral-200 flex flex-row gap-2 justify-items-center">
+                    <a href="/new.html"
+                       class="text-green-700 px-3 py-3 rounded-lg font-medium text-center">edit</a>
+                    <a href="/new.html"
+                       class="px-3 py-3 rounded-lg text-center text-red-700">delete</a>
+                </div>
+            </div>
+            <div class="border border-neutral-200 rounded-lg bg-neutral-50 flex flex-col place-content-between">
+                <div class="p-7 pt-5 pb-6">
+                    <div class="flex flex-row gap-2 my-2 place-content-between items-center">
+                        <p class="text-sm mb-2 text-neutral-500 pt-2">21st Aug, 2025</p>
+                        <p class="text-sm text-neutral-500 py-0 px-2 border border-purple-200 bg-purple-100 rounded-full">Politics</p>
+                    </div>
+                    <h2 class="font-bold text-lg mb-2 leading-5">Outback kids suffer through two years with no local dentist</h2>
+                    <p class="text-neutral-600 max-h-50 text-ellipsis lg:overflow-scroll">
+                        Whistleblower Richard Boyle has avoided convictions and a jail term for exposing aggressive debt collection practices at the Australian Taxation Office.</p>
+                </div>
+                <div class="text-base mt-2 px-5 pb-3 flex flex-row gap-2 justify-items-center">
+                    <a href="/new.html"
+                       class="text-green-700 px-3 py-3 rounded-lg font-medium text-center">edit</a>
+                    <a href="/new.html"
+                       class="px-3 py-3 rounded-lg text-center text-neutral-600">delete</a>
+                </div>
+            </div>
+            <div class="border border-neutral-200 rounded-lg bg-neutral-50 flex flex-col place-content-between">
+                <div class="p-7 pt-5 pb-6">
+                    <div class="flex flex-row gap-2 my-2 place-content-between items-center">
+                        <p class="text-sm mb-2 text-neutral-500 pt-2">21st Aug, 2025</p>
+                        <p class="text-sm text-neutral-500 py-0 px-2 border border-purple-200 bg-purple-100 rounded-full">Politics</p>
+                    </div>
+                    <h2 class="font-bold text-lg mb-2 leading-5">Outback kids suffer through two years with no local dentist</h2>
+                    <p class="text-neutral-600 max-h-50 text-ellipsis lg:overflow-scroll">
+                        Whistleblower Richard Boyle has avoided convictions and a jail term for exposing aggressive debt collection practices at the Australian Taxation Office.</p>
+                </div>
+                <div class="text-base mt-2 px-5 pb-3 flex flex-row text-center gap-x-2">
+                    <div class="w-14 hover:font-medium transition delay-100 duration-150 ease-in-out">
+                        <a href="/new.html"
+                           class="px-3 py-3 rounded-lg flex flex-col items-center text-center">
+                            <img src="images/edit.png" class="mb-1" width="24" alt="edit the note">
+                            edit
+                        </a>
+                    </div>
+                    <div class="w-14">
+                        <a href="/new.html"
+                           class="px-3 py-3 rounded-lg flex flex-col items-center text-center">
+                            <img src="images/delete.png" class="mb-1" width="24" alt="delete the note">
+                            delete
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border border-neutral-200 rounded-lg bg-neutral-50 flex flex-col place-content-between">
+                <div class="p-7 pt-5 pb-6">
+                    <div class="flex flex-row gap-2 my-2 place-content-between items-center">
+                        <p class="text-sm mb-2 text-neutral-500 pt-2">21st Aug, 2025</p>
+                        <p class="text-sm text-neutral-500 py-0 px-2 border border-purple-200 bg-purple-100 rounded-full">Politics</p>
+                    </div>
+                    <h2 class="font-bold text-lg mb-2 leading-5">Outback kids suffer through two years with no local dentist</h2>
+                    <p class="text-neutral-600 max-h-50 text-ellipsis lg:overflow-scroll">
+                        Whistleblower Richard Boyle has avoided convictions and a jail term for exposing aggressive debt collection practices at the Australian Taxation Office.</p>
+                </div>
+                <div class="text-base mt-2 px-5 pb-3 flex flex-row gap-2 justify-items-center">
+                    <a href="/new.html"
+                       class="px-3 py-3 rounded-lg text-center text-red-700 shrink">
+                        <img src="images/edit.png" width="24" alt="edit the note">
+                    </a>
+                    <a href="/new.html"
+                       class="px-3 py-3 rounded-lg text-center text-red-700 shrink">
+                        <img src="images/delete.png" width="24" alt="delete the note">
+                    </a>
+                </div>
+            </div>
+            <div class="border border-neutral-200 rounded-lg bg-neutral-50 flex flex-col place-content-between">
+                <div class="p-7 pt-5 pb-6">
+                    <div class="flex flex-row gap-2 my-2 place-content-between items-center">
+                        <p class="text-sm mb-2 text-neutral-500 pt-2">21st Aug, 2025</p>
+                        <p class="text-sm text-neutral-500 py-0 px-2 border border-purple-200 bg-purple-100 rounded-full">Politics</p>
+                    </div>
+                    <h2 class="font-bold text-lg mb-2 leading-5">Outback kids suffer through two years with no local dentist</h2>
+                    <p class="text-neutral-600 max-h-50 text-ellipsis lg:overflow-scroll">
+                        Whistleblower Richard Boyle has avoided convictions and a jail term for exposing aggressive debt collection practices at the Australian Taxation Office.</p>
+                </div>
+                <div class="text-base mt-2 px-5 pb-3 flex flex-row items-center text-center">
+                    <div class="w-14 hover:font-medium transition delay-100 duration-150 ease-in-out">
+                        <a href="/new.html"
+                           class="px-3 py-3 rounded-lg flex flex-row gap-x-1 place-items-center text-center text-neutral-600">
+                            <img src="images/edit.png" class="mb-1" width="24" alt="edit the note">
+                            edit
+                        </a>
+                    </div>
+                    <div class="text-center w-7 pl-1 ml-4 font-semibold text-neutral-500">/</div>
+                    <div class="">
+                        <a href="/new.html"
+                           class="px-3 py-3 rounded-lg flex flex-row gap-x-1 place-items-center text-center text-neutral-600">
+                            <img src="images/delete.png" class="mb-1" width="24" alt="delete the note">
+                            delete
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border border-neutral-200 rounded-lg bg-neutral-50 flex flex-col place-content-between">
+                <div class="p-7 pt-5 pb-6">
+                    <div class="flex flex-row gap-2 my-2 place-content-between items-center">
+                        <p class="text-sm mb-2 text-neutral-500 pt-2">21st Aug, 2025</p>
+                        <p class="text-sm text-neutral-500 py-0 px-2 border border-purple-200 bg-purple-100 rounded-full">Politics</p>
+                    </div>
+                    <h2 class="font-bold text-lg mb-2 leading-5">Outback kids suffer through two years with no local dentist</h2>
+                    <p class="text-neutral-600 max-h-50 text-ellipsis lg:overflow-scroll">
+                        Whistleblower Richard Boyle has avoided convictions and a jail term for exposing aggressive debt collection practices at the Australian Taxation Office.</p>
+                </div>
+                <div class="text-base mt-2 px-5 pb-3 flex flex-row gap-2 justify-items-center gap-x-4">
+                    <div class="w-14 hover:font-medium transition delay-100 duration-150 ease-in-out">
+                        <a href="/new.html"
+                           class="px-3 py-3 rounded-lg flex flex-row gap-x-1 place-items-center text-center text-neutral-600">
+                            <img src="images/edit.png" class="mb-1" width="24" alt="edit the note">
+                            edit
+                        </a>
+                    </div>
+                    <div class="">
+                        <a href="/new.html"
+                           class="px-3 py-3 rounded-lg flex flex-row gap-x-1 place-items-center text-center text-red-700">
+                            <img src="images/delete.png" class="mb-1" width="24" alt="delete the note">
+                            delete
+                        </a>
+                    </div>
+                </div>
+            </div>
+            -->
+            <div class="note-item">
+                <div class="content">
+                    <div class="metadata">
+                        <p class="note-date">21st Aug, 2025</p>
+                        <p class="pill purple">Politics</p>
+                    </div>
+                    <h2>Outback kids suffer through two years with no local dentist</h2>
+                    <p>
+                        Whistleblower Richard Boyle has avoided convictions and a jail term for exposing aggressive debt collection practices at the Australian Taxation Office.</p>
+                </div>
+                <div class="controls">
+                    <form>
+                        <button class="button flex edit">
+                            <img src="images/edit-white.png"
+                                 class="my-1"
+                                 width="18"
+                                 alt="edit the note">
+                            <span class="ml-1">edit</span>
+                        </button>
+                        <input type="hidden" value="" name="note-id">
+                    </form>
+                    <form>
+                        <button class="button flex delete">
+                            <img src="images/delete.png"
+                                 class="my-1"
+                                 width="18"
+                                 alt="delete the note">
+                            <span class="ml-1">delete</span>
+                        </button>
+                        <input type="hidden" value="" name="note-id">
+                    </form>
+                </div>
+            </div>
+            <div class="note-item">
+                <div class="content">
+                    <div class="metadata">
+                        <p class="note-date">21st Aug, 2025</p>
+                        <p class="pill purple">Politics</p>
+                    </div>
+                    <h2>Outback kids suffer through two years with no local dentist</h2>
+                    <p>
+                        Whistleblower Richard Boyle has avoided convictions and a jail term for exposing aggressive debt collection practices at the Australian Taxation Office.</p>
+                </div>
+                <div class="controls">
+                    <div cla
+                    <div class="edit">
+                        <a href="/new.html"
+                           class="button flex edit">
+                            <img src="images/edit-white.png"
+                                 class="my-1"
+                                 width="18"
+                                 alt="edit the note">
+                            <span class="px-2">edit</span>
+                        </a>
+                    </div>
+                    <div>
+                        <a href="/new.html"
+                           class="button flex delete">
+                            <img src="images/delete.png"
+                                 class="my-1"
+                                 width="18"
+                                 alt="delete the note">
+                            <span class="px-2">delete</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="note-item">
+                <div class="content">
+                    <div class="metadata">
+                        <p class="note-date">21st Aug, 2025</p>
+                        <p class="pill purple">Politics</p>
+                    </div>
+                    <h2>Outback kids suffer through two years with no local dentist</h2>
+                    <p>
+                        Whistleblower Richard Boyle has avoided convictions and a jail term for exposing aggressive debt collection practices at the Australian Taxation Office.</p>
+                </div>
+                <div class="controls">
+                    <div class="edit">
+                        <a href="/new.html"
+                           class="button flex edit">
+                            <img src="images/edit-white.png"
+                                 class="my-1"
+                                 width="18"
+                                 alt="edit the note">
+                            <span class="px-2">edit</span>
+                        </a>
+                    </div>
+                    <div>
+                        <a href="/new.html"
+                           class="button flex delete">
+                            <img src="images/delete.png"
+                                 class="my-1"
+                                 width="18"
+                                 alt="delete the note">
+                            <span class="px-2">delete</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="note-item">
+                <div class="content">
+                    <div class="metadata">
+                        <p class="note-date">21st Aug, 2025</p>
+                        <p class="pill purple">Politics</p>
+                    </div>
+                    <h2>Outback kids suffer through two years with no local dentist</h2>
+                    <p>
+                        Whistleblower Richard Boyle has avoided convictions and a jail term for exposing aggressive debt collection practices at the Australian Taxation Office.</p>
+                </div>
+                <div class="controls">
+                    <div class="edit">
+                        <a href="/new.html"
+                           class="button flex edit">
+                            <img src="images/edit-white.png"
+                                 class="my-1"
+                                 width="18"
+                                 alt="edit the note">
+                            <span class="px-2">edit</span>
+                        </a>
+                    </div>
+                    <div>
+                        <a href="/new.html"
+                           class="button flex delete">
+                            <img src="images/delete.png"
+                                 class="my-1"
+                                 width="18"
+                                 alt="delete the note">
+                            <span class="px-2">delete</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+<footer>
+    <p>copyright &copy; Matthew Setter. 2025.</p>
+    <p>created with &#x1F5A4; in <a href="https://www.google.com/maps/place/Bundaberg+QLD+4670/@-24.8864739,152.2813915,13z/data=!3m1!4b1!4m6!3m5!1s0x6bebb93f0664d9a3:0x400eef17f20d7c0!8m2!3d-24.8660809!4d152.3488645!16s%2Fm%2F027cnr_?entry=ttu&g_ep=EgoyMDI1MDgyNS4wIKXMDSoASAFQAw%3D%3D"
+                                    title="Have a look at Bundaberg on Google Maps"
+                                    class="underline underline-offset-2 decoration-2"
+                                    target="_blank">Bundaberg</a> by
+        <a href="https://matthewsetter.com"
+           target="_blank"
+           class="underline underline-offset-2 decoration-2"
+           title="Find out a bit about me.">Matthew Setter</a>.</p>
+</footer>
+</body>
+</html>
