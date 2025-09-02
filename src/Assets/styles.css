@@ -25,6 +25,22 @@
         @apply block mb-2 font-semibold;
     }
 
+    label.error {
+        @apply font-bold text-red-700;
+    }
+
+    form input[type="search"],
+    form input[type="text"],
+    form input[type="date"],
+    form textarea {
+        @apply bg-neutral-50 border border-neutral-200 px-4 py-2 rounded-md w-full;
+    }
+
+    form input.error,
+    form textarea.error {
+        @apply border-2 bg-red-50 border-red-400;
+    }
+
     footer {
         @apply mt-6 text-sm text-neutral-500 text-center border-t-2 border-t-neutral-200 py-6;
     }

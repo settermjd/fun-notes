@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="./css/styles.css" rel="stylesheet">
-    <title>Fun Note App</title>
+    <title>Just Notes | The unobtrusive and minimalist notes app, designed for you.</title>
 </head>
 <body class="antialiased md:subpixel-antialiased mx-auto w-full lg:w-5xl text-neutral-700 bg-neutral-100 px-2 md:px-5">
 <nav class="px-1 py-3 lg:pl-12 lg:pr-12 md:pt-6 flex flex-row place-content-between gap-y-2 text-base text-neutral-600">
@@ -13,17 +13,17 @@
         <img src="/images/home.png" alt="Go to the home page">
     </a>
     <ul class="flex flex-row mt-1">
-        <li><a href="" class="hover:underline hover:underline-offset-2 hover:decoration-2 text-base text-neutral-600 hover:bg-neutral-200 px-3 py-2 rounded-md font-medium">Blog</a></li>
-        <li><a href="" class="hover:underline hover:underline-offset-2 hover:decoration-2 text-base text-neutral-600  hover:bg-neutral-200 px-3 py-2 rounded-md font-medium">About</a></li>
+        <li><a href="/about.html"
+               class="hover:underline hover:underline-offset-2 hover:decoration-2 text-base text-neutral-600  hover:bg-neutral-200 px-3 py-2 rounded-md font-medium">About</a></li>
     </ul>
 </nav>
 <div class="p-3 lg:px-12 mt-4 md:mt-0 lg:mb-8 lg:mt-4">
     <header class="flex flex-col place-content-between gap-y-2 mt-2 text-center">
         <h1 class="text-6xl font-bold py-3">
-            Fun Notes
+            Just Notes
         </h1>
         <div class="text-xl font-medium text-neutral-500 w-3/4 mx-auto text-center">
-            Don't just organise apps, create fun apps that help you out whenever you need them — even if you don't!
+            Create notes quickly and easily, with a minimum of fuss and effort!
         </div>
         <div class="my-4 mx-auto">
             <a href="/new.html" class="button create w-fit">
@@ -35,7 +35,48 @@
             </a>
         </div>
     </header>
-    <main class="pt-2">
+    <main class="pt-2 mt-6">
+        <div class="flex flex-row place-content-between gap-x-4">
+            <div class="flex flex-col gap-y-2 relative">
+                <!--
+                <form class="flex flex-row gap-x-2">
+                    <label for="search" class="content-end">Search:</label>
+                    <input type="search"
+                           id="search"
+                           required
+                           name="search"
+                           class="rounded-full py-1">
+                </form>
+                <div class="hidden rounded-lg p-6 border-neutral-200 border-2 w-1/3 mx-auto bg-neutral-50 absolute left-90 top-11">
+                    <h3 class="font-medium text-lg mb-2 underline">Search Results</h3>
+                    <ul class="list-outside">
+                        <li class="mb-2">Outback kids suffer through two years with no local dentist</li>
+                        <li class="mb-2">Outback kids suffer through two years with no local dentist</li>
+                        <li class="mb-2">Outback kids suffer through two years with no local dentist</li>
+                        <li class="mb-2">Outback kids suffer through two years with no local dentist</li>
+                    </ul>
+                </div>
+                -->
+                <form class="flex flex-row gap-x-2">
+                    <label for="category"
+                           class="content-end">category:</label>
+                    <select id="category"
+                            class="rounded-md border-2 border-neutral-200 p-2">
+                        <option>politics</option>
+                        <option>sport</option>
+                    </select>
+                </form>
+            </div>
+            <div>
+                <form class="flex flex-row gap-x-2">
+                    <label for="sort_by" class="content-end">sort:</label>
+                    <select id="sort_by" class="rounded-md border-2 border-neutral-200 p-2">
+                        <option>earliest first</option>
+                        <option>latest first</option>
+                    </select>
+                </form>
+            </div>
+        </div>
         <div id="no-notes" class="hidden text-center w-full my-6 px-3 py-5 bg-slate-50 rounded-lg shadow-xs shadow-purple-100 border border-purple-100 text-neutral-600">
             You've not created any notes yet.
         </div>
@@ -262,7 +303,7 @@
                         Whistleblower Richard Boyle has avoided convictions and a jail term for exposing aggressive debt collection practices at the Australian Taxation Office.</p>
                 </div>
                 <div class="controls">
-                    <form>
+                    <form name="edit-note" action="/edit">
                         <button class="button flex edit">
                             <img src="images/edit-white.png"
                                  class="my-1"
@@ -272,7 +313,7 @@
                         </button>
                         <input type="hidden" value="" name="note-id">
                     </form>
-                    <form>
+                    <form name="delete-note" action="/delete">
                         <button class="button flex delete">
                             <img src="images/delete.png"
                                  class="my-1"
@@ -295,27 +336,26 @@
                         Whistleblower Richard Boyle has avoided convictions and a jail term for exposing aggressive debt collection practices at the Australian Taxation Office.</p>
                 </div>
                 <div class="controls">
-                    <div cla
-                    <div class="edit">
-                        <a href="/new.html"
-                           class="button flex edit">
+                    <form name="edit-note" action="/edit">
+                        <button class="button flex edit">
                             <img src="images/edit-white.png"
                                  class="my-1"
                                  width="18"
                                  alt="edit the note">
-                            <span class="px-2">edit</span>
-                        </a>
-                    </div>
-                    <div>
-                        <a href="/new.html"
-                           class="button flex delete">
+                            <span class="ml-1">edit</span>
+                        </button>
+                        <input type="hidden" value="" name="note-id">
+                    </form>
+                    <form name="delete-note" action="/delete">
+                        <button class="button flex delete">
                             <img src="images/delete.png"
                                  class="my-1"
                                  width="18"
                                  alt="delete the note">
-                            <span class="px-2">delete</span>
-                        </a>
-                    </div>
+                            <span class="ml-1">delete</span>
+                        </button>
+                        <input type="hidden" value="" name="note-id">
+                    </form>
                 </div>
             </div>
             <div class="note-item">
@@ -329,26 +369,26 @@
                         Whistleblower Richard Boyle has avoided convictions and a jail term for exposing aggressive debt collection practices at the Australian Taxation Office.</p>
                 </div>
                 <div class="controls">
-                    <div class="edit">
-                        <a href="/new.html"
-                           class="button flex edit">
+                    <form name="edit-note" action="/edit">
+                        <button class="button flex edit">
                             <img src="images/edit-white.png"
                                  class="my-1"
                                  width="18"
                                  alt="edit the note">
-                            <span class="px-2">edit</span>
-                        </a>
-                    </div>
-                    <div>
-                        <a href="/new.html"
-                           class="button flex delete">
+                            <span class="ml-1">edit</span>
+                        </button>
+                        <input type="hidden" value="" name="note-id">
+                    </form>
+                    <form name="delete-note" action="/delete">
+                        <button class="button flex delete">
                             <img src="images/delete.png"
                                  class="my-1"
                                  width="18"
                                  alt="delete the note">
-                            <span class="px-2">delete</span>
-                        </a>
-                    </div>
+                            <span class="ml-1">delete</span>
+                        </button>
+                        <input type="hidden" value="" name="note-id">
+                    </form>
                 </div>
             </div>
             <div class="note-item">
@@ -362,27 +402,35 @@
                         Whistleblower Richard Boyle has avoided convictions and a jail term for exposing aggressive debt collection practices at the Australian Taxation Office.</p>
                 </div>
                 <div class="controls">
-                    <div class="edit">
-                        <a href="/new.html"
-                           class="button flex edit">
+                    <form name="edit-note" action="/edit">
+                        <button class="button flex edit">
                             <img src="images/edit-white.png"
                                  class="my-1"
                                  width="18"
                                  alt="edit the note">
-                            <span class="px-2">edit</span>
-                        </a>
-                    </div>
-                    <div>
-                        <a href="/new.html"
-                           class="button flex delete">
+                            <span class="ml-1">edit</span>
+                        </button>
+                        <input type="hidden" value="" name="note-id">
+                    </form>
+                    <form name="delete-note" action="/delete">
+                        <button class="button flex delete">
                             <img src="images/delete.png"
                                  class="my-1"
                                  width="18"
                                  alt="delete the note">
-                            <span class="px-2">delete</span>
-                        </a>
-                    </div>
+                            <span class="ml-1">delete</span>
+                        </button>
+                        <input type="hidden" value="" name="note-id">
+                    </form>
                 </div>
+            </div>
+        </div>
+        <div id="pagination" class="flex flex-row place-content-between items-center">
+            <div class="ml-1">Showing <span class="font-semibold">1</span> to <span class="font-semibold">10</span> of
+                <span class="font-semibold">20</span> results</div>
+            <div class="flex flex-row gap-x-3">
+                <a href="" class="button">Previous</a>
+                <a href="" class="button">Next</a>
             </div>
         </div>
     </main>
