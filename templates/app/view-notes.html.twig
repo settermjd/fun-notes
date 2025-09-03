@@ -11,35 +11,37 @@
     {% else %}
         <div id="notes">
             {% for note in notes %}
-                <article class="note-item" id="note-{{ note.getId|escape }}">
+                <article class="note-item" id="note-{{ note.id|escape }}">
                     <div class="content">
                         <div class="metadata">
-                            <p class="note-date">{{ note.getDate|format_datetime('short', 'none') }}</p>
-                            <p class="pill purple">{{ note.getCategory|escape }}</p>
+                            <p class="note-date">
+                                {{ note.created|format_datetime(pattern: 'dd/MM/Y', timezone: 'Australia/Brisbane') }}
+                            </p>
+                            <p class="pill purple">{{ note.category|escape }}</p>
                         </div>
-                        <h2>{{ note.getTitle|escape }}</h2>
-                        <p>{{ note.getBody|escape }}</p>
+                        <h2>{{ note.title|escape }}</h2>
+                        <p>{{ note.body|escape }}</p>
                     </div>
                     <div class="controls">
-                        <form action="/edit/{{ note.getId|escape }}" name="form-edit-note">
+                        <form action="/edit/{{ note.id|escape }}" name="form-edit-note">
                             <button class="button flex edit">
                                 <img src="/images/white/edit.png"
                                      class="my-1"
                                      width="18"
-                                     alt="Edit note {{ note.getId|escape }}">
+                                     alt="Edit note {{ note.id|escape }}">
                                 <span class="ml-1">edit</span>
                             </button>
-                            <input type="hidden" value="{{ note.getId|escape }}" name="note-id">
+                            <input type="hidden" value="{{ note.id|escape }}" name="note-id">
                         </form>
-                        <form action="/delete/{{ note.getId|escape }}" name="form-delete-note">
+                        <form action="/delete/{{ note.id|escape }}" name="form-delete-note">
                             <button class="button flex delete">
                                 <img src="/images/delete.png"
                                      class="my-1"
                                      width="18"
-                                     alt="Delete note {{ note.getId|escape }}">
+                                     alt="Delete note {{ note.id|escape }}">
                                 <span class="ml-1">delete</span>
                             </button>
-                            <input type="hidden" value="{{ note.getId|escape }}" name="note-id">
+                            <input type="hidden" value="{{ note.id|escape }}" name="note-id">
                         </form>
                     </div>
                 </article>

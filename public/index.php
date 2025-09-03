@@ -73,8 +73,8 @@ readonly class BaseRequest
     public function __construct(protected ContainerInterface $container)
     {
         $this->databaseService = $this->container->get(DatabaseService::class);
-        $this->twig = $this->container->get(Environment::class);
-        $this->view = $this->container->get(TemplateRendererInterface::class);
+        $this->twig            = $this->container->get(Environment::class);
+        $this->view            = $this->container->get(TemplateRendererInterface::class);
     }
 }
 
@@ -84,9 +84,14 @@ $app->get('/[{page:\d+}[/{sort:\d+}[/{category:\d+}]]]',
         public function handle(ServerRequestInterface $request): ResponseInterface
         {
             $this->twig->addGlobal('show_create_button', true);
-            return new HtmlResponse($this->view->render('app::view-notes', [
-
-            ]));
+            return new HtmlResponse(
+                $this->view->render(
+                    'app::view-notes',
+                    [
+                        'notes' => $this->databaseService->select(),
+                    ]
+                )
+            );
         }
     }
 );
