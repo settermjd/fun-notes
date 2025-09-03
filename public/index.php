@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
+use App\Service\DatabaseService;
 use Laminas\ConfigAggregator\ConfigAggregator;
+use Laminas\Db\TableGateway\Feature\GlobalAdapterFeature;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Laminas\Diactoros\Response\TextResponse;
 use Laminas\ServiceManager\ServiceManager;
@@ -20,6 +22,14 @@ use Twig\Environment;
 use Twig\Extra\Intl\IntlExtension;
 
 require __DIR__ . '/../vendor/autoload.php';
+
+/**
+ * Initialise the database adapter
+ */
+$adapter = new Laminas\Db\Adapter\Adapter([
+    'driver'   => 'Pdo_Sqlite',
+    'database' => __DIR__ . '/../data/database/database.sqlite3',
+]);
 
 $config                                       = new ConfigAggregator([
     MezzioTwigConfigProvider::class,
@@ -48,6 +58,7 @@ $config                                       = new ConfigAggregator([
 $dependencies                                 = $config['dependencies'];
 $dependencies['services']['config']           = $config;
 $container                                    = new ServiceManager($dependencies);
+$container->setService(DatabaseService::class, new DatabaseService($adapter));
 $router = new FastRouteRouter();
 $app = AppFactory::create($container, $router);
 $app->pipe(new RouteMiddleware($router));
@@ -55,11 +66,13 @@ $app->pipe(new DispatchMiddleware());
 
 readonly class BaseRequest
 {
+    protected DatabaseService $databaseService;
     protected Environment $twig;
     protected TemplateRendererInterface $view;
 
     public function __construct(protected ContainerInterface $container)
     {
+        $this->databaseService = $this->container->get(DatabaseService::class);
         $this->twig = $this->container->get(Environment::class);
         $this->view = $this->container->get(TemplateRendererInterface::class);
     }
