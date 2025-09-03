@@ -9,5 +9,14 @@
         "twig/intl-extra": "^3.21",
         "twilio/sdk": "^8.7",
         "vlucas/phpdotenv": "^5.6"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "scripts": {
+        "serve": [
+            "Composer\\Config::disableProcessTimeout",
+            "php -d upload_max_filesize=5242880 -d post_max_size=7340032 -S 0.0.0.0:8080 -t public/"
+        ]
     }
 }
