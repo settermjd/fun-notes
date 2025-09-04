@@ -44,7 +44,32 @@
                               rows="5">{% if note is defined %}{{ note.body }}{% endif %}</textarea>
                 </div>
                 <div>
-                    <label for="date">Date (optional):</label>
+                    <label for="category">Category:</label>
+                    <select id="category"
+                            class=" bg-neutral-50 border border-neutral-200 px-4 py-2 rounded-md w-full"
+                            name="category">
+                        <option value="education"
+                                {% if note is defined and note.category == 'education' %}
+                                    selected
+                                {% endif %}>
+                            Education
+                        </option>
+                        <option value="politics"
+                                {% if note is defined and note.category == 'politics' %}
+                                    selected
+                                {% endif %}>
+                            Politics
+                        </option>
+                        <option value="sport"
+                                {% if note is defined and note.category == 'sport' %}
+                                    selected
+                                {% endif %}>
+                            Sport
+                        </option>
+                    </select>
+                </div>
+                <div>
+                    <label for="created">Date created (optional):</label>
                     <input type="date"
                            class=" bg-neutral-50 border border-neutral-200 px-4 py-2 rounded-md w-full"
                            id="date"
