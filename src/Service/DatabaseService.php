@@ -21,4 +21,13 @@ class DatabaseService extends AbstractTableGateway
         $this->initialize();
     }
 
+    public function noteExists(int $noteId): bool
+    {
+        return $this->select(
+                [
+                    'id' => $noteId
+                ]
+            )->current() !== null;
+    }
+
 }

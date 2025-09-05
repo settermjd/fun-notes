@@ -6,6 +6,7 @@ use App\InputFilter\NoteInputFilter;
 use App\Service\DatabaseService;
 use Laminas\ConfigAggregator\ConfigAggregator;
 use Laminas\Diactoros\Response\HtmlResponse;
+use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\Diactoros\Response\TextResponse;
 use Laminas\Filter\ConfigProvider as FilterConfigProvider;
 use Laminas\InputFilter\ConfigProvider as InputFilterConfigProvider;
@@ -15,6 +16,7 @@ use Laminas\ServiceManager\ServiceManager;
 use Asgrim\MiniMezzio\AppFactory;
 use Laminas\Validator\ConfigProvider as ValidatorConfigProvider;
 use Mezzio\ConfigProvider as MezzioConfigProvider;
+use Mezzio\Handler\NotFoundHandler;
 use Mezzio\Router\FastRouteRouter;
 use Mezzio\Router\Middleware\DispatchMiddleware;
 use Mezzio\Router\Middleware\RouteMiddleware;
@@ -123,6 +125,8 @@ readonly class BaseRequest
     }
 }
 
+$app->get('/404', NotFoundHandler::class);
+
 // View all notes paginated (sorted and filtered if desired)
 $app->get('/[{page:\d+}[/{sort:\d+}[/{category:\d+}]]]',
     new readonly class($container) extends BaseRequest implements RequestHandlerInterface {
@@ -142,44 +146,80 @@ $app->get('/[{page:\d+}[/{sort:\d+}[/{category:\d+}]]]',
 );
 
 // Display the form to create a new note
-$app->get('/create',
-    new readonly class($container) extends BaseRequest implements RequestHandlerInterface {
+$app->get('/manage[/{id:\d+}]',
+    new readonly class($container) extends BaseRequest implements RequestHandlerInterface
+    {
         public function handle(ServerRequestInterface $request): ResponseInterface
         {
-            return new HtmlResponse($this->view->render('app::manage-note', [
+            $data = [];
 
-            ]));
+            if ($request->getAttribute('id') !== null) {
+                if (! $this->databaseService->noteExists((int) $request->getAttribute('id'))) {
+                    return new RedirectResponse('/404');
+                }
+
+                $data['note'] = $this->databaseService
+                    ->select(
+                        [
+                            'id' => $request->getAttribute('id')
+                        ]
+                    )->current();
+            }
+
+            return new HtmlResponse($this->view->render('app::manage-note', $data));
         }
     }
 );
 
 // Create a new note
-$app->post('/create', new class implements RequestHandlerInterface {
-    public function handle(ServerRequestInterface $request): ResponseInterface
+$app->post('/manage[/{id:\d+}]',
+    new readonly class($container) extends BaseRequest implements RequestHandlerInterface
     {
-        return new TextResponse('Hello world!');
-    }
-});
-
-// Display the form to edit an existing note
-$app->get('/edit/{id:\d+}',
-    new readonly class($container) extends BaseRequest implements RequestHandlerInterface {
         public function handle(ServerRequestInterface $request): ResponseInterface
         {
-            return new HtmlResponse($this->view->render('app::manage-note', [
+//            $requestBody = $request->getParsedBody();
+//            unset($requestBody['submit']);
+//            $requestBody['body'] = nl2br($requestBody['body']);
+//            if ($requestBody['created'] === '') {
+//                $requestBody['created'] = date('Y-m-d');
+//            }
+            $this->noteInputFilter->setData($request->getParsedBody());
+            if (! $this->noteInputFilter->isValid()) {
+                return new RedirectResponse('/manage');
+            }
 
-            ]));
+            /** @var int $noteId */
+            $noteId = (int) $this->noteInputFilter->get('id')->getValue();
+
+            if ($this->noteInputFilter->has('id') && $noteId !== null) {
+                if (! $this->databaseService->noteExists($noteId)) {
+                    return new RedirectResponse('/404');
+                }
+
+                $this->databaseService->update(
+                    $this->noteInputFilter->getValues(),
+                    [
+                        'id' => $this->noteInputFilter->getValue('id')
+                    ]
+                );
+                return new RedirectResponse(
+                    sprintf(
+                        '/manage/%d',
+                        $this->noteInputFilter->getValues()['id']
+                    )
+                );
+            }
+
+            $this->databaseService->insert($this->noteInputFilter->getValues());
+            return new RedirectResponse(
+                sprintf(
+                    '/manage/%d',
+                    $this->databaseService->getLastInsertValue()
+                )
+            );
         }
     }
 );
-
-// Edit an existing note
-$app->post('/edit/{id:\d+}', new class implements RequestHandlerInterface {
-    public function handle(ServerRequestInterface $request): ResponseInterface
-    {
-        return new TextResponse('Hello world!');
-    }
-});
 
 // Delete an existing note
 $app->post('/delete/{id:\d+}', new class implements RequestHandlerInterface {
