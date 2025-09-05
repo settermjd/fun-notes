@@ -25,6 +25,10 @@
         @apply hover:underline hover:underline-offset-2 hover:decoration-2 text-neutral-600 hover:bg-neutral-200 px-3 py-2 rounded-md font-medium;
     }
 
+    a.simple {
+        @apply p-0 hover:bg-inherit text-inherit;
+    }
+
     label {
         @apply block mb-2 font-semibold;
     }
