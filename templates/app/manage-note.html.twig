@@ -1,9 +1,11 @@
 {% if note is defined and note.id is defined %}
     {% set title = 'Edit Note' %}
     {% set mode = 'edit' %}
+    {% set submit_icon = 'edit' %}
 {% else %}
     {% set title = 'Create Note' %}
     {% set mode = 'create' %}
+    {% set submit_icon = 'document' %}
 {% endif %}
 
 {% extends "default.html.twig" %}
@@ -82,12 +84,12 @@
                     {% if mode == 'edit' %}
                         <input type="hidden" name="id" value="{{ note.id }}">
                     {% endif %}
-                    <button name="create"
-                            class="button create">
-                        <img src="/images/white/document.png"
-                             alt=""
-                             class="py-1">
-                        {% if mode == "edit" %} Edit {% else %} Create {% endif %} note
+                    <button name="submit"
+                            class="button {{ mode }} w-full md:w-fit">
+                        <img class="py-1"
+                             src="/images/white/{{ submit_icon }}.png"
+                             alt="">
+                        {% if mode == "edit" %} Update {% else %} Create {% endif %} note
                     </button>
                     <a href="/" class="text-center w-full md:w-fit text-base button">Cancel</a>
                 </div>
