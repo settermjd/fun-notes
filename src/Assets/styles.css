@@ -109,7 +109,7 @@
     }
 
     .note-item .content {
-        @apply p-7 pt-3 pb-6;
+        @apply p-7 pt-3 pb-3;
     }
 
     .note-item .controls {
@@ -120,8 +120,8 @@
         @apply hover:font-medium transition delay-100 duration-150 ease-in-out;
     }
 
-    .note-item p {
-        @apply text-neutral-600 max-h-50 text-ellipsis lg:overflow-scroll;
+    .note-item .body {
+        @apply text-neutral-600 max-h-50 overflow-auto rounded-md;
     }
 
     .note-date {
