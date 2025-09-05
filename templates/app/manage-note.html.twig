@@ -25,7 +25,9 @@
                 {% endif %}
                 <p class="font-semibold">All fields are required, unless marked as optional.</p>
             </div>
-            <form class="flex flex-col gap-y-5 w-full md:w-2/3">
+            <form action="/create"
+                  method="post"
+                  class="flex flex-col gap-y-5 w-full md:w-2/3">
                 <div>
                     <label for="title">Title:</label>
                     <input type="text"

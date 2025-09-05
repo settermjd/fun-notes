@@ -1,13 +1,17 @@
 {
     "require": {
         "asgrim/mini-mezzio": "^2.2",
-        "php-db/phpdb": "dev-x.x.2",
         "laminas/laminas-config-aggregator": "^1.18",
         "laminas/laminas-inputfilter": "dev-service-manager-v4",
         "laminas/laminas-servicemanager": "4.5.x-dev",
+        "league/commonmark": "^2.8@dev",
+        "league/html-to-markdown": "^5.2@dev",
         "mezzio/mezzio-fastroute": "^3.13",
         "mezzio/mezzio-twigrenderer": "^2.17",
+        "php-db/phpdb": "dev-x.x.2",
+        "php-db/phpdb-adapter-sqlite": "0.1.x-dev",
         "twig/intl-extra": "^3.21",
+        "twig/markdown-extra": "4.x-dev",
         "twilio/sdk": "^8.7",
         "vlucas/phpdotenv": "^5.6"
     },
@@ -34,6 +38,10 @@
         {
             "type": "vcs",
             "url": "git@github.com:php-db/phpdb.git"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:php-db/phpdb-adapter-sqlite.git"
         }
     ]
 }
