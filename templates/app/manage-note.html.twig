@@ -29,7 +29,10 @@
                         and you're done. If you don't to set a date, it will default to the current date.
                     </p>
                 {% endif %}
-                <p class="font-semibold">All fields are required, unless marked as optional.</p>
+                <p class="font-medium">
+                    All fields are required, unless marked as optional.
+                    And, the <em>body</em> field supports <a href="https://markdownguide.org" class="simple" target="_blank">Markdown formatting</a>.
+                </p>
             </div>
             <form action="/manage{% if mode == 'edit' %}/{{ note.id }}{% endif %}"
                   method="post"
@@ -44,7 +47,13 @@
                            required>
                 </div>
                 <div>
-                    <label for="body">Body:</label>
+                    <div class="flex flex-row place-content-between">
+                        <label for="body">Body:</label>
+                        <p class="p-1 text-sm text-neutral-500 my-0">
+                            <a href="https://markdownguide.org"
+                               target="_blank" class="simple">Markdown formatting</a> is supported.
+                        </p>
+                    </div>
                     <textarea name="body"
                               class=" bg-neutral-50 border border-neutral-200 p-4 rounded-md w-full"
                               id="body"
