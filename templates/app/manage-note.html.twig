@@ -40,7 +40,7 @@
                 <div>
                     <label for="title">Title:</label>
                     <input type="text"
-                           class=" bg-neutral-50 border border-neutral-200 px-4 py-2 rounded-md w-full"
+                           class=" bg-neutral-50 border border-neutral-300 px-4 py-2 rounded-md w-full focus:bg-white transition delay-100 duration-150 ease-in-out"
                            id="title"
                            name="title"
                            value="{% if note is defined %}{{ note.title }}{% endif %}"
@@ -55,7 +55,7 @@
                         </p>
                     </div>
                     <textarea name="body"
-                              class=" bg-neutral-50 border border-neutral-200 p-4 rounded-md w-full"
+                              class=" bg-neutral-50 border border-neutral-300 p-4 rounded-md w-full focus:bg-white transition delay-100 duration-150 ease-in-out"
                               id="body"
                               required
                               rows="5">{% if note is defined %}{{ note.body }}{% endif %}</textarea>
@@ -63,7 +63,7 @@
                 <div>
                     <label for="category">Category:</label>
                     <select id="category"
-                            class=" bg-neutral-50 border border-neutral-200 px-4 py-2 rounded-md w-full"
+                            class=" bg-neutral-50 border border-neutral-300 px-4 py-2 rounded-md w-full"
                             name="category">
                         <option value="education"
                                 {% if note is defined and note.category == 'education' %}
