@@ -5,7 +5,6 @@ declare(strict_types=1);
 use App\InputFilter\NoteInputFilter;
 use App\Service\DatabaseService;
 use Laminas\ConfigAggregator\ConfigAggregator;
-use Laminas\Db\TableGateway\Feature\GlobalAdapterFeature;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Laminas\Diactoros\Response\TextResponse;
 use Laminas\Filter\ConfigProvider as FilterConfigProvider;
@@ -21,6 +20,10 @@ use Mezzio\Router\Middleware\DispatchMiddleware;
 use Mezzio\Router\Middleware\RouteMiddleware;
 use Mezzio\Template\TemplateRendererInterface;
 use Mezzio\Twig\ConfigProvider as MezzioTwigConfigProvider;
+use PhpDb\Adapter\AdapterAbstractServiceFactory;
+use PhpDb\Adapter\Sqlite\ConfigProvider as PhpDbSqliteConfigProvider;
+use PhpDb\Container\AdapterManager;
+use PhpDb\Container\ConfigProvider as PhpDbConfigProvider;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -30,19 +33,13 @@ use Twig\Extra\Intl\IntlExtension;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-/**
- * Initialise the database adapter
- */
-$adapter = new Laminas\Db\Adapter\Adapter([
-    'driver'   => 'Pdo_Sqlite',
-    'database' => __DIR__ . '/../data/database/database.sqlite3',
-]);
-
 $config                                       = new ConfigAggregator([
     MezzioConfigProvider::class,
     MezzioTwigConfigProvider::class,
     FilterConfigProvider::class,
     InputFilterConfigProvider::class,
+    PhpDbConfigProvider::class,
+    PhpDbSqliteConfigProvider::class,
     ValidatorConfigProvider::class,
     \App\ConfigProvider::class,
     new class ()
@@ -61,7 +58,25 @@ $config                                       = new ConfigAggregator([
                 'twig' => [
                     'extensions' => [
                         new IntlExtension(),
-                    ]
+                        new MarkdownExtension(),
+                    ],
+                    'runtime_loaders' => [
+                        new class implements RuntimeLoaderInterface {
+                            public function load($class) {
+                                if (MarkdownRuntime::class === $class) {
+                                    return new MarkdownRuntime(new DefaultMarkdown());
+                                }
+                            }
+                        },
+                    ],
+                ],
+                'db' => [
+                    'driver'       => 'sqlite',
+                    'connection' => [
+                        'dsn'      => __DIR__ . '/../data/database/database.sqlite3',
+                        'charset'  => 'utf8',
+                        'driver_options' => [],
+                    ],
                 ],
             ];
         }
@@ -70,7 +85,13 @@ $config                                       = new ConfigAggregator([
 $dependencies                                 = $config['dependencies'];
 $dependencies['services']['config']           = $config;
 $container                                    = new ServiceManager($dependencies);
-$container->setService(DatabaseService::class, new DatabaseService($adapter));
+$container->setService(
+    DatabaseService::class,
+    new DatabaseService(
+        $container->get(\PhpDb\Adapter\AdapterInterface::class)
+    )
+);
+
 /** @var InputFilterPluginManager $pluginManager */
 $pluginManager = $container->get(InputFilterPluginManager::class);
 $container->setService(
