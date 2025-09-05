@@ -2,13 +2,20 @@
 
 declare(strict_types=1);
 
+use App\InputFilter\NoteInputFilter;
 use App\Service\DatabaseService;
 use Laminas\ConfigAggregator\ConfigAggregator;
 use Laminas\Db\TableGateway\Feature\GlobalAdapterFeature;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Laminas\Diactoros\Response\TextResponse;
+use Laminas\Filter\ConfigProvider as FilterConfigProvider;
+use Laminas\InputFilter\ConfigProvider as InputFilterConfigProvider;
+use Laminas\InputFilter\Factory;
+use Laminas\InputFilter\InputFilterPluginManager;
 use Laminas\ServiceManager\ServiceManager;
 use Asgrim\MiniMezzio\AppFactory;
+use Laminas\Validator\ConfigProvider as ValidatorConfigProvider;
+use Mezzio\ConfigProvider as MezzioConfigProvider;
 use Mezzio\Router\FastRouteRouter;
 use Mezzio\Router\Middleware\DispatchMiddleware;
 use Mezzio\Router\Middleware\RouteMiddleware;
@@ -32,7 +39,12 @@ $adapter = new Laminas\Db\Adapter\Adapter([
 ]);
 
 $config                                       = new ConfigAggregator([
+    MezzioConfigProvider::class,
     MezzioTwigConfigProvider::class,
+    FilterConfigProvider::class,
+    InputFilterConfigProvider::class,
+    ValidatorConfigProvider::class,
+    \App\ConfigProvider::class,
     new class ()
     {
         public function __invoke(): array
@@ -59,6 +71,12 @@ $dependencies                                 = $config['dependencies'];
 $dependencies['services']['config']           = $config;
 $container                                    = new ServiceManager($dependencies);
 $container->setService(DatabaseService::class, new DatabaseService($adapter));
+/** @var InputFilterPluginManager $pluginManager */
+$pluginManager = $container->get(InputFilterPluginManager::class);
+$container->setService(
+    NoteInputFilter::class,
+    $pluginManager->get(NoteInputFilter::class)
+);
 $router = new FastRouteRouter();
 $app = AppFactory::create($container, $router);
 $app->pipe(new RouteMiddleware($router));
@@ -68,11 +86,13 @@ readonly class BaseRequest
 {
     protected DatabaseService $databaseService;
     protected Environment $twig;
+    protected NoteInputFilter $noteInputFilter;
     protected TemplateRendererInterface $view;
 
     public function __construct(protected ContainerInterface $container)
     {
         $this->databaseService = $this->container->get(DatabaseService::class);
+        $this->noteInputFilter = $this->container->get(NoteInputFilter::class);
         $this->twig            = $this->container->get(Environment::class);
         $this->view            = $this->container->get(TemplateRendererInterface::class);
     }
