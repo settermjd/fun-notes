@@ -20,7 +20,7 @@
                             <p class="pill purple">{{ note.category|escape }}</p>
                         </div>
                         <h2>{{ note.title|escape }}</h2>
-                        <p>{{ note.body|escape }}</p>
+                        <div class="body">{{ note.body|markdown_to_html }}</div>
                     </div>
                     <div class="controls">
                         <a href="/manage/{{ note.id|escape }}"
