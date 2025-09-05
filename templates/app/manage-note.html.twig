@@ -36,6 +36,7 @@
             </div>
             <form action="/manage{% if mode == 'edit' %}/{{ note.id }}{% endif %}"
                   method="post"
+                  name="form-manage-note"
                   class="flex flex-col gap-y-5 w-full md:w-2/3">
                 <div>
                     <label for="title">Title:</label>
