@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-use Laminas\Db\Adapter\AdapterInterface;
-use Laminas\Db\TableGateway\AbstractTableGateway;
-use Laminas\Db\TableGateway\Feature\FeatureSet;
-use Laminas\Db\TableGateway\Feature\GlobalAdapterFeature;
-use Laminas\Db\TableGateway\Feature\RowGatewayFeature;
+use PhpDb\Adapter\AdapterInterface;
+use PhpDb\TableGateway\AbstractTableGateway;
+use PhpDb\TableGateway\Feature\FeatureSet;
+use PhpDb\TableGateway\Feature\RowGatewayFeature;
 
 class DatabaseService extends AbstractTableGateway
 {
