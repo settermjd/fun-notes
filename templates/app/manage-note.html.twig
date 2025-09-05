@@ -15,11 +15,15 @@
 {% block content %}
     <hr class="mt-6 mb-8 border-neutral-200">
     <section class="my-6">
-        <h2>Create new note</h2>
+        {% if mode == 'create' %}
+            <h2>Create a note</h2>
+        {% else %}
+            <h2>Update note</h2>
+        {% endif %}
         <div class="flex flex-row md:gap-x-8 mt-8">
             <div class="w-1/3 hidden md:block">
+                <h3>Quick guide</h3>
                 {% if mode == 'create' %}
-                    <h3>Creating notes</h3>
                     <p>
                         It doesn't take much to create a note. Just add a title and a body, click "<i>Create a note</i>"
                         and you're done. If you don't to set a date, it will default to the current date.
@@ -27,7 +31,7 @@
                 {% endif %}
                 <p class="font-semibold">All fields are required, unless marked as optional.</p>
             </div>
-            <form action="/create"
+            <form action="/manage{% if mode == 'edit' %}/{{ note.id }}{% endif %}"
                   method="post"
                   class="flex flex-col gap-y-5 w-full md:w-2/3">
                 <div>
