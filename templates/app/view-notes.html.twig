@@ -23,26 +23,22 @@
                         <p>{{ note.body|escape }}</p>
                     </div>
                     <div class="controls">
-                        <form action="/edit/{{ note.id|escape }}" name="form-edit-note">
-                            <button class="button flex edit">
-                                <img src="/images/white/edit.png"
-                                     class="my-1"
-                                     width="18"
-                                     alt="Edit note {{ note.id|escape }}">
-                                <span class="ml-1">edit</span>
-                            </button>
-                            <input type="hidden" value="{{ note.id|escape }}" name="note-id">
-                        </form>
-                        <form action="/delete/{{ note.id|escape }}" name="form-delete-note">
-                            <button class="button flex delete">
-                                <img src="/images/delete.png"
-                                     class="my-1"
-                                     width="18"
-                                     alt="Delete note {{ note.id|escape }}">
-                                <span class="ml-1">delete</span>
-                            </button>
-                            <input type="hidden" value="{{ note.id|escape }}" name="note-id">
-                        </form>
+                        <a href="/manage/{{ note.id|escape }}"
+                           class="button flex edit">
+                            <img src="/images/white/edit.png"
+                                 class="my-1"
+                                 width="18"
+                                 alt="Edit note {{ note.id|escape }}">
+                            <span class="ml-1">edit</span>
+                        </a>
+                        <a href="/delete/{{ note.id|escape }}"
+                           class="button flex delete">
+                            <img src="/images/delete.png"
+                                 class="my-1"
+                                 width="18"
+                                 alt="Edit note {{ note.id|escape }}">
+                            <span class="ml-1">delete</span>
+                        </a>
                     </div>
                 </article>
             {% endfor %}
