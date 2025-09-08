@@ -182,11 +182,10 @@ $app->post('/manage[/{id:\d+}]',
                 return new RedirectResponse('/manage');
             }
 
-            /** @var int $noteId */
-            $noteId = (int) $this->noteInputFilter->get('id')->getValue();
+            $noteId = $this->noteInputFilter->get('id')->getValue();
 
-            if ($this->noteInputFilter->has('id') && $noteId !== null) {
-                if (! $this->databaseService->noteExists($noteId)) {
+            if ($noteId !== null) {
+                if (! $this->databaseService->noteExists((int) $noteId)) {
                     return new RedirectResponse('/404');
                 }
 
