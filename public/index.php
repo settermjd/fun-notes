@@ -216,10 +216,18 @@ $app->post('/manage[/{id:\d+}]',
 );
 
 // Delete an existing note
-$app->post('/delete/{id:\d+}', new class implements RequestHandlerInterface {
+$app->get('/delete/{id:\d+}', new readonly class($container) extends BaseRequest implements RequestHandlerInterface {
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        return new TextResponse('Hello world!');
+        $noteId = (int) $request->getAttribute('id');
+        if (! $this->databaseService->noteExists($noteId)) {
+            return new RedirectResponse('/404');
+        }
+
+        $this->databaseService->delete([
+            'id' => $noteId,
+        ]);
+        return new RedirectResponse('/');
     }
 });
 
