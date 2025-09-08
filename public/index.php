@@ -177,12 +177,6 @@ $app->post('/manage[/{id:\d+}]',
     {
         public function handle(ServerRequestInterface $request): ResponseInterface
         {
-//            $requestBody = $request->getParsedBody();
-//            unset($requestBody['submit']);
-//            $requestBody['body'] = nl2br($requestBody['body']);
-//            if ($requestBody['created'] === '') {
-//                $requestBody['created'] = date('Y-m-d');
-//            }
             $this->noteInputFilter->setData($request->getParsedBody());
             if (! $this->noteInputFilter->isValid()) {
                 return new RedirectResponse('/manage');
