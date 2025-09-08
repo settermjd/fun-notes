@@ -31,7 +31,9 @@
                 {% endif %}
                 <p class="font-medium">
                     All fields are required, unless marked as optional.
-                    And, the <em>body</em> field supports <a href="https://markdownguide.org" class="simple" target="_blank">Markdown formatting</a>.
+                    And, the <em>body</em> field supports <a href="https://markdownguide.org"
+                                                             class="bare"
+                                                             target="_blank">Markdown formatting</a>.
                 </p>
             </div>
             <form action="/manage{% if mode == 'edit' %}/{{ note.id }}{% endif %}"
@@ -52,7 +54,8 @@
                         <label for="body">Body:</label>
                         <p class="p-1 text-sm text-neutral-500 my-0">
                             <a href="https://markdownguide.org"
-                               target="_blank" class="simple">Markdown formatting</a> is supported.
+                               target="_blank"
+                               class="bare">Markdown formatting</a> is supported.
                         </p>
                     </div>
                     <textarea name="body"
