@@ -2,6 +2,10 @@
 
 {% block title %}Home{% endblock %}
 
+{% block scripts %}
+    <script type="module" src="/js/main.js"></script>
+{% endblock %}
+
 {% block content %}
     {% if not notes is defined or notes|length == 0 %}
         <div id="no-notes"
@@ -33,14 +37,15 @@
                                  alt="Edit note {{ note.id|escape }}">
                             <span class="ml-1">edit</span>
                         </a>
-                        <a href="/delete/{{ note.id|escape }}"
-                           class="button flex delete">
+                        <button type="button"
+                                class="button flex delete"
+                                id="delete-note-{{ note.id|escape }}">
                             <img src="/images/delete.png"
                                  class="my-1"
                                  width="18"
                                  alt="Edit note {{ note.id|escape }}">
                             <span class="ml-1">delete</span>
-                        </a>
+                        </button>
                     </div>
                 </article>
             {% endfor %}

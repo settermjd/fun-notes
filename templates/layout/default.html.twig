@@ -7,7 +7,52 @@
     <link href="/css/styles.css" rel="stylesheet">
     <title>{% block title %}{% endblock %} | {{ app_name }}</title>
 </head>
-<body class="antialiased md:subpixel-antialiased mx-auto w-full lg:w-5xl text-neutral-700 bg-neutral-100 px-2 md:px-5">
+<body class="antialiased md:subpixel-antialiased mx-auto w-full lg:w-5xl text-neutral-700 bg-neutral-100 px-2 md:px-5 relative">
+<div
+        aria-describedby="my-dialog-description"
+        aria-hidden="true"
+        aria-labelledby="my-dialog-title"
+        class="dialog-container absolute top-5 left-58 hidden"
+        id="my-dialog"
+>
+    <div class="dialog-overlay" data-a11y-dialog-hide></div>
+    <div class="dialog-content" role="document">
+        <div class="flex flex-col gap-y-1"
+             id="your-dialog-id">
+            <div class="flex flex-row place-content-between">
+                <h2 id="my-dialog-title">Are you sure?</h2>
+                <button
+                        aria-label="Close this dialog window"
+                        class="dialog-close h-9 w-9 p-1 m-1"
+                        data-a11y-dialog-hide
+                >
+                    <svg class="svg-icon"
+                         viewBox="0 0 20 20">
+                        <path
+                                fill="currentcolor"
+                                d="M15.898,4.045c-0.271-0.272-0.713-0.272-0.986,0l-4.71,4.711L5.493,4.045c-0.272-0.272-0.714-0.272-0.986,0s-0.272,0.714,0,0.986l4.709,4.711l-4.71,4.711c-0.272,0.271-0.272,0.713,0,0.986c0.136,0.136,0.314,0.203,0.492,0.203c0.179,0,0.357-0.067,0.493-0.203l4.711-4.711l4.71,4.711c0.137,0.136,0.314,0.203,0.494,0.203c0.178,0,0.355-0.067,0.492-0.203c0.273-0.273,0.273-0.715,0-0.986l-4.711-4.711l4.711-4.711C16.172,4.759,16.172,4.317,15.898,4.045z"
+                        ></path>
+                    </svg>
+                </button>
+            </div>
+            <p id="my-dialog-description">
+                Before deleting the note, please know that this action is permanent.
+            </p>
+            <form class="flex flex-row gap-x-3 justify-end"
+                  action="/delete"
+                  method="post">
+                <button type="button"
+                        class="w-fit"
+                        id="closeDialog"
+                        name="button">Cancel</button>
+                <button type="submit"
+                        class="w-fit button delete"
+                        name="button">Delete the note</button>
+                <input type="hidden" id="note-id-to-delete" name="id" value="">
+            </form>
+        </div>
+    </div>
+</div>
 <nav class="px-1 py-3 lg:pl-12 lg:pr-12 md:pt-6 flex flex-row place-content-between gap-y-2 text-base text-neutral-600">
     <a href="/"
        class="hover:underline hover:underline-offset-2 hover:decoration-2 text-base text-neutral-600 hover:bg-neutral-200 px-3 py-2 rounded-md font-medium">
@@ -28,7 +73,9 @@
         </div>
         {% if show_create_button %}
         <div class="my-4 mx-auto">
-            <a href="/manage" class="button create w-fit">
+            <a href="/manage"
+               class="button create w-fit"
+               id="create-note">
                 <img src="/images/white/document.png"
                      width="18"
                      class="my-1"
@@ -42,6 +89,8 @@
     <main class="pt-2">
         {% block content %}{% endblock %}
     </main>
+
+
 </div>
 <footer>
     <p>copyright &copy; Matthew Setter. {{ "now"|date("Y") }}.</p>
@@ -54,5 +103,7 @@
            class="underline underline-offset-2 decoration-2"
            title="Find out a bit about me.">Matthew Setter</a>.</p>
 </footer>
+<!-- if development -->
+{% block scripts %}{% endblock %}
 </body>
 </html>
