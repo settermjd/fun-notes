@@ -29,7 +29,8 @@
         @apply p-0 hover:bg-inherit;
     }
 
-    a.bare {
+    a.bare,
+    .body p a{
         @apply p-0 hover:bg-inherit underline underline-offset-2 decoration-2;
     }
 
@@ -141,15 +142,11 @@
     }
 
     .pill.purple {
-        @apply border-purple-200 bg-purple-100;
+        @apply border-purple-200 bg-purple-100 text-purple-700;
     }
 
-    /** Style the confirmation dialog */
-    .dialog-container,
-    .dialog-overlay {
-    }
-
-    .dialog-close {
+    p.pill {
+        @apply mb-0;
     }
 
     /**
@@ -175,6 +172,6 @@
      * 3. Make sure the dialog has an opaque background.
      */
     .dialog-content {
-        @apply m-auto z-10 relative bg-white p-4 rounded-md drop-shadow-2xl shadow-2xl border-2 border-neutral-300;
+        @apply m-auto z-40 relative bg-white p-4 rounded-lg drop-shadow-2xl shadow-2xl border-2 border-neutral-300;
     }
 }
