@@ -102,13 +102,16 @@
                         <input type="hidden" name="id" value="{{ note.id }}">
                     {% endif %}
                     <button name="submit"
+                            id="create-note"
                             class="button {{ mode }} w-full md:w-fit">
                         <img class="py-1"
                              src="/images/white/{{ submit_icon }}.png"
                              alt="">
                         {% if mode == "edit" %} Update {% else %} Create {% endif %} note
                     </button>
-                    <a href="/" class="text-center w-full md:w-fit text-base button">Cancel</a>
+                    <a href="/"
+                       class="text-center w-full md:w-fit text-base button"
+                       id="cancel-create-new-note">Cancel</a>
                 </div>
             </form>
         </div>
