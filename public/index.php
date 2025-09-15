@@ -16,10 +16,15 @@ use Laminas\ServiceManager\ServiceManager;
 use Asgrim\MiniMezzio\AppFactory;
 use Laminas\Validator\ConfigProvider as ValidatorConfigProvider;
 use Mezzio\ConfigProvider as MezzioConfigProvider;
+use Mezzio\Flash\ConfigProvider as MezzioFlashConfigProvider;
+use Mezzio\Flash\FlashMessageMiddleware;
 use Mezzio\Handler\NotFoundHandler;
 use Mezzio\Router\FastRouteRouter;
 use Mezzio\Router\Middleware\DispatchMiddleware;
 use Mezzio\Router\Middleware\RouteMiddleware;
+use Mezzio\Session\ConfigProvider as MezzioSessionConfigProvider;
+use Mezzio\Session\Ext\ConfigProvider as MezzioSessionExtConfigProvider;
+use Mezzio\Session\SessionMiddleware;
 use Mezzio\Template\TemplateRendererInterface;
 use Mezzio\Twig\ConfigProvider as MezzioTwigConfigProvider;
 use PhpDb\Adapter\AdapterAbstractServiceFactory;
@@ -48,6 +53,9 @@ $config                                       = new ConfigAggregator([
     PhpDbSqliteConfigProvider::class,
     ValidatorConfigProvider::class,
     \App\ConfigProvider::class,
+    MezzioSessionConfigProvider::class,
+    MezzioSessionExtConfigProvider::class,
+    MezzioFlashConfigProvider::class,
     new class ()
     {
         public function __invoke(): array
@@ -106,6 +114,8 @@ $container->setService(
 );
 $router = new FastRouteRouter();
 $app = AppFactory::create($container, $router);
+$app->pipe(SessionMiddleware::class);
+$app->pipe(FlashMessageMiddleware::class);
 $app->pipe(new RouteMiddleware($router));
 $app->pipe(new DispatchMiddleware());
 
