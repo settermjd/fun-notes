@@ -9,8 +9,16 @@ deleteButtons.forEach((btn) => {
     });
 });
 
+// Close the note deletion confirmation dialog when the cancel button is pressed
 let cancelDialog = document.getElementById('closeDialog')
 cancelDialog.addEventListener("click", function (event) {
+    let dialog = document.getElementById('my-dialog')
+    dialog.classList.add("hidden")
+});
+
+// Close the note deletion confirmation dialog when the close button is pressed
+let closeButton = document.getElementById('btnCloseDialog')
+closeButton.addEventListener("click", function (event) {
     let dialog = document.getElementById('my-dialog')
     dialog.classList.add("hidden")
 });
