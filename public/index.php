@@ -37,6 +37,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Twig\Environment;
+use Twig\Extension\DebugExtension;
 use Twig\Extra\Intl\IntlExtension;
 use Twig\Extra\Markdown\DefaultMarkdown;
 use Twig\Extra\Markdown\MarkdownExtension;
@@ -72,6 +73,7 @@ $config                                       = new ConfigAggregator([
                 ],
                 'twig' => [
                     'extensions' => [
+                        new DebugExtension(),
                         new IntlExtension(),
                         new MarkdownExtension(),
                     ],
