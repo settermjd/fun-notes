@@ -7,10 +7,8 @@ use App\Service\DatabaseService;
 use Laminas\ConfigAggregator\ConfigAggregator;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
-use Laminas\Diactoros\Response\TextResponse;
 use Laminas\Filter\ConfigProvider as FilterConfigProvider;
 use Laminas\InputFilter\ConfigProvider as InputFilterConfigProvider;
-use Laminas\InputFilter\Factory;
 use Laminas\InputFilter\InputFilterPluginManager;
 use Laminas\ServiceManager\ServiceManager;
 use Asgrim\MiniMezzio\AppFactory;
@@ -28,9 +26,8 @@ use Mezzio\Session\Ext\ConfigProvider as MezzioSessionExtConfigProvider;
 use Mezzio\Session\SessionMiddleware;
 use Mezzio\Template\TemplateRendererInterface;
 use Mezzio\Twig\ConfigProvider as MezzioTwigConfigProvider;
-use PhpDb\Adapter\AdapterAbstractServiceFactory;
+use PhpDb\Adapter\AdapterInterface;
 use PhpDb\Adapter\Sqlite\ConfigProvider as PhpDbSqliteConfigProvider;
-use PhpDb\Container\AdapterManager;
 use PhpDb\Container\ConfigProvider as PhpDbConfigProvider;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -108,7 +105,7 @@ $container                                    = new ServiceManager($dependencies
 $container->setService(
     DatabaseService::class,
     new DatabaseService(
-        $container->get(\PhpDb\Adapter\AdapterInterface::class)
+        $container->get(AdapterInterface::class)
     )
 );
 
@@ -196,7 +193,9 @@ $app->get('/manage[/{id:\d+}]',
     }
 );
 
-// Create a new note
+/**
+ * Create a new note or update an existing one
+ */
 $app->post('/manage[/{id:\d+}]',
     new readonly class($container) extends BaseRequest implements RequestHandlerInterface
     {
@@ -212,7 +211,6 @@ $app->post('/manage[/{id:\d+}]',
             }
 
             $noteId = $this->noteInputFilter->get('id')->getValue();
-
             if ($noteId !== null) {
                 if (! $this->databaseService->noteExists((int) $noteId)) {
                     return new RedirectResponse('/404');
