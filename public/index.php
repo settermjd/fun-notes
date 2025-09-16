@@ -68,7 +68,10 @@ $config                                       = new ConfigAggregator([
                         'app'    => [__DIR__ . '/../templates/app'],
                         'error'  => [__DIR__ . '/../templates/error'],
                         'layout' => [__DIR__ . '/../templates/layout'],
-                        '__main__'    => [__DIR__ . '/../templates/layout'],
+                        '__main__' => [
+                            __DIR__ . '/../templates/layout',
+                            __DIR__ . '/../templates/app'
+                        ],
                     ],
                 ],
                 'twig' => [
@@ -163,7 +166,13 @@ $app->get('/manage[/{id:\d+}]',
     {
         public function handle(ServerRequestInterface $request): ResponseInterface
         {
-            $data = [];
+            $data = [
+                'categories' => [
+                    'education',
+                    'politics',
+                    'sport'
+                ],
+            ];
 
             if ($request->getAttribute('id') !== null) {
                 if (! $this->databaseService->noteExists((int) $request->getAttribute('id'))) {

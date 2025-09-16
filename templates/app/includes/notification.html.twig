@@ -1,0 +1,10 @@
+{% if error != "" or message != "" %}
+    {% set icon = error != "" ? 'close' : 'check' %}
+    <div class="notification">
+        <img src="/images/{{ icon }}.png" class="w-12" alt="">
+        <div>
+            <p class="title">App Notification</p>
+            <p class="message">{{ error != "" ? error : message }}</p>
+        </div>
+    </div>
+{% endif %}

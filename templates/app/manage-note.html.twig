@@ -13,46 +13,26 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block notification %}
-    {% if error is defined %}
-        {% set icon = "close" %}
-    {% endif %}
-    {% if message is defined %}
-        {% set icon = "check" %}
-    {% endif %}
-    {% if error != "" or message != "" %}
-        <div class="bg-linear-to-r from-neutral-50 to-neutral-100 px-8 py-6 text-center border-2 border-neutral-200 opacity-90 items-center rounded-2xl shadow-lg absolute right-5 top-5 flex flex-row gap-x-5 animate-fade-out" style="animation-iteration-count: 1; animation-duration: 2s; animation-fill-mode: forwards; animation-delay: 3s;">
-            <img src="/images/{{ icon }}.png" class="w-12" alt="">
-            <div class="text-left">
-                <p class="font-semibold mb-0">App Notification</p>
-                <p class="mb-0 mt-1">{{ error is defined ? error : message }}</p>
-            </div>
-        </div>
-    {% endif %}
-    {{ dump() }}
+    {{ include('includes/notification.html.twig') }}
 {% endblock %}
 
 {% block content %}
     <hr class="">
     <section class="my-6">
-        {% if mode == 'create' %}
-            <h2>Create a note</h2>
-        {% else %}
-            <h2>Update note</h2>
-        {% endif %}
+        <h2>{{ mode == 'create' ? 'Create a note' : 'Update note' }}</h2>
         <div class="flex flex-row md:gap-x-8 mt-8">
             <div class="quick-guide">
                 <h3>Quick guide</h3>
                 {% if mode == 'create' %}
                     <p>
-                        It doesn't take much to create a note. Just add a title and a body, click "<i>Create a note</i>"
-                        and you're done. If you don't to set a date, it will default to the current date.
+                        It doesn't take much to create a note.
+                        Just add a title and a body, click "<i>Create a note</i>" and you're done.
+                        If you don't to set a date, it will default to the current date.
                     </p>
                 {% endif %}
                 <p>
                     All fields are required, unless marked as optional.
-                    And, the <em>body</em> field supports <a href="https://markdownguide.org"
-                                                             class="bare"
-                                                             target="_blank">Markdown formatting</a>.
+                    And, the <em>body</em> field supports <a href="https://markdownguide.org" class="bare" target="_blank">Markdown formatting</a>.
                 </p>
             </div>
             <form action="/manage{% if mode == 'edit' %}/{{ note.id }}{% endif %}"
@@ -63,7 +43,7 @@
                     <input type="text"
                            id="title"
                            name="title"
-                           value="{% if note is defined %}{{ note.title }}{% endif %}"
+                           value="{{ note.title ?? '' }}"
                            required>
                 </div>
                 <div>
@@ -78,37 +58,27 @@
                     <textarea name="body"
                               id="body"
                               required
-                              rows="5">{% if note is defined %}{{ note.body }}{% endif %}</textarea>
+                              rows="5">{{ note.body ?? '' }}</textarea>
                 </div>
                 <div>
                     <label for="category">Category:</label>
                     <select id="category"
                             name="category">
-                        <option value="education"
-                                {% if note is defined and note.category == 'education' %}
-                                    selected="selected"
-                                {% endif %}>
-                            Education
+                        {% for category in categories %}
+                        <option value="{{ category }}"
+                            {% if note is defined and note.category == category %}
+                                selected="selected"
+                            {% endif %}>
+                            {{ category|capitalize }}
                         </option>
-                        <option value="politics"
-                                {% if note is defined and note.category == 'politics' %}
-                                    selected="selected"
-                                {% endif %}>
-                            Politics
-                        </option>
-                        <option value="sport"
-                                {% if note is defined and note.category == 'sport' %}
-                                    selected="selected"
-                                {% endif %}>
-                            Sport
-                        </option>
+                        {% endfor %}
                     </select>
                 </div>
                 <div>
                     <label for="created">Date created (optional):</label>
                     <input type="date"
                            id="created"
-                           value="{% if note is defined %}{{ note.created }}{% endif %}"
+                           value="{{ note.created ?? '' }}"
                            name="created">
                 </div>
                 <div class="controls">
@@ -121,7 +91,7 @@
                         <img
                              src="/images/white/{{ submit_icon }}.png"
                              alt="">
-                        {% if mode == "edit" %} Update {% else %} Create {% endif %} note
+                        {{ mode == "edit" ? 'Update' : 'Create' }} note
                     </button>
                     <a href="/"
                        class="button"

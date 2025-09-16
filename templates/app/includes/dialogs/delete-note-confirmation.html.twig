@@ -1,0 +1,53 @@
+<div
+        aria-describedby="my-dialog-description"
+        aria-hidden="true"
+        aria-labelledby="my-dialog-title"
+        class="dialog-container right-5 top-5 md:w-130 hidden fixed mx-4 z-40"
+        id="my-dialog"
+>
+    <div class="dialog-overlay" data-a11y-dialog-hide></div>
+    <div class="dialog-content" role="document">
+        <div class="flex flex-col gap-y-1"
+             id="your-dialog-id">
+            <div class="flex flex-row gap-x-4 place-content-between">
+                <img src="/images/light-bulb.png" class="hidden md:block w-18 h-18 p-2 grow" alt="">
+                <div>
+                    <div class="flex flex-row gap-x-4">
+                        <div>
+                            <p class="font-semibold mb-2">Are you sure?</p>
+                            <p id="my-dialog-description">
+                                Before deleting the note, please know that this action is permanent.
+                            </p>
+                        </div>
+                        <button
+                                aria-label="Close this dialog window"
+                                class="h-6 w-6 p-0 m-0 bare"
+                                data-a11y-dialog-hide
+                                id="btnCloseDialog"
+                        >
+                            <svg class="svg-icon"
+                                 viewBox="0 0 20 20">
+                                <path
+                                        fill="currentcolor"
+                                        d="M15.898,4.045c-0.271-0.272-0.713-0.272-0.986,0l-4.71,4.711L5.493,4.045c-0.272-0.272-0.714-0.272-0.986,0s-0.272,0.714,0,0.986l4.709,4.711l-4.71,4.711c-0.272,0.271-0.272,0.713,0,0.986c0.136,0.136,0.314,0.203,0.492,0.203c0.179,0,0.357-0.067,0.493-0.203l4.711-4.711l4.71,4.711c0.137,0.136,0.314,0.203,0.494,0.203c0.178,0,0.355-0.067,0.492-0.203c0.273-0.273,0.273-0.715,0-0.986l-4.711-4.711l4.711-4.711C16.172,4.759,16.172,4.317,15.898,4.045z"
+                                ></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <form class="flex flex-col md:flex-row gap-y-2 md:gap-x-3 justify-start"
+                          action="/delete"
+                          method="post">
+                        <button type="button"
+                                class="w-full md:w-fit small"
+                                id="closeDialog"
+                                name="button">Cancel</button>
+                        <button type="submit"
+                                class="w-full md:w-fit delete small"
+                                name="button">Delete the note</button>
+                        <input type="hidden" id="note-id-to-delete" name="id" value="">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
