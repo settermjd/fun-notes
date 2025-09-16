@@ -16,11 +16,11 @@
 
 @layer base {
     body {
-        @apply text-neutral-600;
+        @apply antialiased md:subpixel-antialiased text-neutral-700 bg-neutral-100 relative;
     }
 
     h1 {
-        @apply text-5xl font-bold mt-3;
+        @apply text-6xl font-bold pt-3 mt-3;
     }
 
     h2 {
@@ -48,6 +48,10 @@
         @apply p-0 hover:bg-inherit underline underline-offset-2 decoration-2;
     }
 
+    header {
+        @apply flex flex-col place-content-between gap-y-2 mt-2 text-center;
+    }
+
     label {
         @apply block mb-2 font-semibold;
     }
@@ -56,11 +60,12 @@
         @apply font-bold text-red-700;
     }
 
+    select,
     form input[type="search"],
     form input[type="text"],
     form input[type="date"],
     form textarea {
-        @apply bg-neutral-50 border border-neutral-200 px-4 py-2 rounded-md w-full;
+        @apply bg-neutral-50 border border-neutral-300 px-4 py-2 rounded-md w-full focus:bg-white transition delay-100 duration-150 ease-in-out;
     }
 
     form input.error,
@@ -68,16 +73,54 @@
         @apply border-2 bg-red-50 border-red-400;
     }
 
+    form .controls {
+        @apply flex flex-col md:flex-row gap-y-2 md:gap-x-2 mt-2 justify-end;
+    }
+
+    form .field-info {
+        @apply p-1 text-sm text-neutral-500 my-0;
+    }
+
+    form {
+        @apply flex flex-col gap-y-5 w-full md:w-2/3;
+    }
+
+    .quick-guide {
+        @apply w-1/3 hidden md:block font-medium;
+    }
+
+    hr {
+        @apply mt-6 mb-8 border-neutral-200;
+    }
+
+    /*
+     * Styling for the footer and all of its sub-elements
+     */
     footer {
         @apply mt-6 text-sm text-neutral-500 text-center border-t-2 border-t-neutral-200 py-6;
     }
 
     footer a {
-        @apply px-0 text-neutral-500 hover:bg-neutral-100 hover:text-neutral-600;
+        @apply px-0 text-neutral-500 hover:bg-neutral-100 hover:text-neutral-600 underline underline-offset-2 decoration-2;
     }
 
     footer p {
         @apply mb-1 text-neutral-500;
+    }
+
+    /*
+     * Styling for the navigation tag and its sub-elements
+     */
+    nav {
+        @apply px-1 py-3 lg:pl-12 lg:pr-12 md:pt-6 flex flex-row place-content-between gap-y-2 text-base text-neutral-600;
+    }
+
+    nav a {
+        @apply hover:underline hover:underline-offset-2 hover:decoration-2 text-base text-neutral-600  hover:bg-neutral-200 px-3 py-2 rounded-md font-medium;
+    }
+
+    nav ul {
+        @apply flex flex-row mt-1;
     }
 
     nav ul li {
@@ -98,9 +141,12 @@
 }
 
 @layer components {
+    /*
+     * Button and elements styled as button styling
+     */
     button,
     .button {
-        @apply bg-neutral-100 text-neutral-800 border-neutral-300 border-2 flex flex-row gap-x-1 justify-center place-items-center py-2 md:py-2 pl-5 pr-4 rounded-lg font-medium text-center transition delay-100 duration-150 ease-in-out w-full md:w-32 shadow-xs focus-visible:outline-2 no-underline focus-visible:outline-offset-2 hover:cursor-pointer hover:shadow-neutral-300 hover:drop-shadow-sm;
+        @apply bg-neutral-100 text-neutral-800 border-neutral-300 border-2 flex flex-row gap-x-1 justify-center place-items-center py-2 md:py-2 pl-5 pr-4 rounded-lg font-medium text-center transition delay-100 duration-150 ease-in-out w-full md:w-fit shadow-xs focus-visible:outline-2 no-underline focus-visible:outline-offset-2 hover:cursor-pointer hover:shadow-neutral-300 hover:drop-shadow-sm;
     }
 
     button.small,
@@ -126,6 +172,40 @@
     button.create,
     .button.create {
         @apply bg-purple-900 w-fit text-white hover:shadow-purple-300 hover:drop-shadow-md;
+    }
+
+    .button img {
+        @apply my-1;
+    }
+
+    .strapline {
+        @apply text-xl font-medium text-neutral-500 w-3/4 mx-auto text-center;
+    }
+
+    /*
+     * Styling for the app notifications and the sub-elements
+     */
+    .notification {
+        @apply bg-linear-to-r from-neutral-50 to-neutral-100 px-8 py-6 text-center border-2 border-neutral-200 opacity-90 items-center rounded-2xl shadow-lg absolute right-5 top-5 flex flex-row gap-x-5 animate-fade-out text-left;
+        animation-delay: 3s;
+        animation-duration: 2s;
+        animation-fill-mode: forwards;
+        animation-iteration-count: 1;
+    }
+
+    .notification .title {
+        @apply font-semibold mb-0;
+    }
+
+    .notification .message {
+        @apply mb-0 mt-1;
+    }
+
+    /*
+     * Styling for the note items, and note container elements
+     */
+    .no-notes {
+        @apply text-center w-full my-6 px-3 py-5 bg-slate-50 rounded-lg shadow-xs shadow-purple-100 border border-purple-100 text-neutral-600;
     }
 
     #notes {
@@ -176,22 +256,13 @@
         @apply mb-0;
     }
 
-    /** Style the confirmation dialog */
-    /**
-     * 1. Make sure the dialog container and all its descendants sits on
-     *    top of the rest of the page.
-     * 2. Make the dialog container a flex container to easily center the
-     *    dialog.
+    /*
+     * Style the confirmation dialog
      */
     .dialog-container {
         @apply z-10 flex;
     }
 
-    /**
-     * 1. Vertically and horizontally center the dialog in the page.
-     * 2. Make sure the dialog sits on top of the overlay.
-     * 3. Make sure the dialog has an opaque background.
-     */
     .dialog-content {
         @apply m-auto z-40 relative bg-linear-to-r from-neutral-50 to-white p-4 rounded-lg shadow-2xl border-2 border-neutral-300;
     }

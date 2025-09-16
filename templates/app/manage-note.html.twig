@@ -32,7 +32,7 @@
 {% endblock %}
 
 {% block content %}
-    <hr class="mt-6 mb-8 border-neutral-200">
+    <hr class="">
     <section class="my-6">
         {% if mode == 'create' %}
             <h2>Create a note</h2>
@@ -40,7 +40,7 @@
             <h2>Update note</h2>
         {% endif %}
         <div class="flex flex-row md:gap-x-8 mt-8">
-            <div class="w-1/3 hidden md:block">
+            <div class="quick-guide">
                 <h3>Quick guide</h3>
                 {% if mode == 'create' %}
                     <p>
@@ -48,7 +48,7 @@
                         and you're done. If you don't to set a date, it will default to the current date.
                     </p>
                 {% endif %}
-                <p class="font-medium">
+                <p>
                     All fields are required, unless marked as optional.
                     And, the <em>body</em> field supports <a href="https://markdownguide.org"
                                                              class="bare"
@@ -57,12 +57,10 @@
             </div>
             <form action="/manage{% if mode == 'edit' %}/{{ note.id }}{% endif %}"
                   method="post"
-                  name="form-manage-note"
-                  class="flex flex-col gap-y-5 w-full md:w-2/3">
+                  name="form-manage-note">
                 <div>
                     <label for="title">Title:</label>
                     <input type="text"
-                           class=" bg-neutral-50 border border-neutral-300 px-4 py-2 rounded-md w-full focus:bg-white transition delay-100 duration-150 ease-in-out"
                            id="title"
                            name="title"
                            value="{% if note is defined %}{{ note.title }}{% endif %}"
@@ -71,14 +69,13 @@
                 <div>
                     <div class="flex flex-row place-content-between">
                         <label for="body">Body:</label>
-                        <p class="p-1 text-sm text-neutral-500 my-0">
+                        <p class="field-info">
                             <a href="https://markdownguide.org"
                                target="_blank"
                                class="bare">Markdown formatting</a> is supported.
                         </p>
                     </div>
                     <textarea name="body"
-                              class=" bg-neutral-50 border border-neutral-300 p-4 rounded-md w-full focus:bg-white transition delay-100 duration-150 ease-in-out"
                               id="body"
                               required
                               rows="5">{% if note is defined %}{{ note.body }}{% endif %}</textarea>
@@ -86,7 +83,6 @@
                 <div>
                     <label for="category">Category:</label>
                     <select id="category"
-                            class=" bg-neutral-50 border border-neutral-300 px-4 py-2 rounded-md w-full"
                             name="category">
                         <option value="education"
                                 {% if note is defined and note.category == 'education' %}
@@ -111,25 +107,24 @@
                 <div>
                     <label for="created">Date created (optional):</label>
                     <input type="date"
-                           class=" bg-neutral-50 border border-neutral-300 px-4 py-2 rounded-md w-full focus:bg-white transition delay-100 duration-150 ease-in-out"
                            id="created"
                            value="{% if note is defined %}{{ note.created }}{% endif %}"
                            name="created">
                 </div>
-                <div class="flex flex-col md:flex-row gap-y-2 md:gap-x-2 mt-2 justify-end">
+                <div class="controls">
                     {% if mode == 'edit' %}
                         <input type="hidden" name="id" value="{{ note.id }}">
                     {% endif %}
                     <button name="submit"
                             id="create-note"
-                            class="button {{ mode }} w-full md:w-fit">
-                        <img class="py-1"
+                            class="button {{ mode }}">
+                        <img
                              src="/images/white/{{ submit_icon }}.png"
                              alt="">
                         {% if mode == "edit" %} Update {% else %} Create {% endif %} note
                     </button>
                     <a href="/"
-                       class="text-center w-full md:w-fit text-base button"
+                       class="button"
                        id="cancel-create-new-note">Cancel</a>
                 </div>
             </form>

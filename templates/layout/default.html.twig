@@ -7,7 +7,7 @@
     <link href="/css/styles.css" rel="stylesheet">
     <title>{% block title %}{% endblock %} | {{ app_name }}</title>
 </head>
-<body class="antialiased md:subpixel-antialiased text-neutral-700 bg-neutral-100 relative">
+<body>
 
 {% block notification %}{% endblock %}
 
@@ -70,17 +70,17 @@
            class="hover:underline hover:underline-offset-2 hover:decoration-2 text-base text-neutral-600 hover:bg-neutral-200 px-3 py-2 rounded-md font-medium">
             <img src="/images/home.png" alt="Go to the home page">
         </a>
-        <ul class="flex flex-row mt-1">
-            <li><a href="" class="hover:underline hover:underline-offset-2 hover:decoration-2 text-base text-neutral-600  hover:bg-neutral-200 px-3 py-2 rounded-md font-medium">About</a></li>
+        <ul>
+            <li><a href="">About</a></li>
+            <li><a href="">Profile</a></li>
+            <li><a href="">Logout</a></li>
         </ul>
     </nav>
     <div class="p-3 lg:px-12 mt-4 md:mt-0 lg:mb-8 lg:mt-4">
         {% block header %}
-            <header class="flex flex-col place-content-between gap-y-2 mt-2 text-center">
-                <h1 class="text-6xl font-bold pt-3">
-                    {{ app_name }}
-                </h1>
-                <div class="text-xl font-medium text-neutral-500 w-3/4 mx-auto text-center">
+            <header>
+                <h1>{{ app_name }}</h1>
+                <div class="strapline">
                     Write notes to remember the things that are important to you.
                 </div>
                 {% if show_create_button %}
@@ -90,7 +90,6 @@
                            id="create-note">
                             <img src="/images/white/document.png"
                                  width="18"
-                                 class="my-1"
                                  alt="Create a note">
                             <span class="px-2">Create a note</span>
                         </a>
@@ -101,19 +100,17 @@
         <main class="pt-2">
             {% block content %}{% endblock %}
         </main>
-
-
     </div>
+
     <footer>
         <p>copyright &copy; Matthew Setter. {{ "now"|date("Y") }}.</p>
         <p>created with &#x1F5A4; in <a href="https://www.google.com/maps/place/Bundaberg+QLD+4670/@-24.8864739,152.2813915,13z/data=!3m1!4b1!4m6!3m5!1s0x6bebb93f0664d9a3:0x400eef17f20d7c0!8m2!3d-24.8660809!4d152.3488645!16s%2Fm%2F027cnr_?entry=ttu&g_ep=EgoyMDI1MDgyNS4wIKXMDSoASAFQAw%3D%3D"
                                         title="Have a look at Bundaberg on Google Maps"
-                                        class="underline underline-offset-2 decoration-2"
                                         target="_blank">Bundaberg</a> by
             <a href="https://matthewsetter.com"
                target="_blank"
-               class="underline underline-offset-2 decoration-2"
-               title="Find out a bit about me.">Matthew Setter</a>.</p>
+               title="Find out a bit about me.">Matthew Setter</a>.
+        </p>
     </footer>
 </div>
 <!-- if development -->
