@@ -120,7 +120,8 @@ $app = AppFactory::create($container, $router);
 $app->pipe(SessionMiddleware::class);
 $app->pipe(FlashMessageMiddleware::class);
 $app->pipe(new RouteMiddleware($router));
-$app->pipe(new DispatchMiddleware());
+$app->pipe(DispatchMiddleware::class);
+$app->pipe(NotFoundHandler::class);
 
 readonly class BaseRequest
 {
