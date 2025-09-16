@@ -12,6 +12,25 @@
 
 {% block title %}{{ title }}{% endblock %}
 
+{% block notification %}
+    {% if error is defined %}
+        {% set icon = "close" %}
+    {% endif %}
+    {% if message is defined %}
+        {% set icon = "check" %}
+    {% endif %}
+    {% if error != "" or message != "" %}
+        <div class="bg-linear-to-r from-neutral-50 to-neutral-100 px-8 py-6 text-center border-2 border-neutral-200 opacity-90 items-center rounded-2xl shadow-lg absolute right-5 top-5 flex flex-row gap-x-5 animate-fade-out" style="animation-iteration-count: 1; animation-duration: 2s; animation-fill-mode: forwards; animation-delay: 3s;">
+            <img src="/images/{{ icon }}.png" class="w-12" alt="">
+            <div class="text-left">
+                <p class="font-semibold mb-0">App Notification</p>
+                <p class="mb-0 mt-1">{{ error is defined ? error : message }}</p>
+            </div>
+        </div>
+    {% endif %}
+    {{ dump() }}
+{% endblock %}
+
 {% block content %}
     <hr class="mt-6 mb-8 border-neutral-200">
     <section class="my-6">
