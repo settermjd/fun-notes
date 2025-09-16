@@ -18,6 +18,7 @@ use Laminas\Validator\ConfigProvider as ValidatorConfigProvider;
 use Mezzio\ConfigProvider as MezzioConfigProvider;
 use Mezzio\Flash\ConfigProvider as MezzioFlashConfigProvider;
 use Mezzio\Flash\FlashMessageMiddleware;
+use Mezzio\Flash\FlashMessagesInterface;
 use Mezzio\Handler\NotFoundHandler;
 use Mezzio\Router\FastRouteRouter;
 use Mezzio\Router\Middleware\DispatchMiddleware;
@@ -142,15 +143,14 @@ $app->get('/[{page:\d+}[/{sort:\d+}[/{category:\d+}]]]',
     new readonly class($container) extends BaseRequest implements RequestHandlerInterface {
         public function handle(ServerRequestInterface $request): ResponseInterface
         {
+            $data['notes'] = $this->databaseService->select();
+
+            /** @var FlashMessagesInterface $flashMessages */
+            $flashMessages = $request->getAttribute(FlashMessageMiddleware::FLASH_ATTRIBUTE);
+            $data = array_merge($data, $flashMessages->getFlashes());
+
             $this->twig->addGlobal('show_create_button', true);
-            return new HtmlResponse(
-                $this->view->render(
-                    'app::view-notes',
-                    [
-                        'notes' => $this->databaseService->select(),
-                    ]
-                )
-            );
+            return new HtmlResponse($this->view->render('app::view-notes', $data));
         }
     }
 );
@@ -176,6 +176,10 @@ $app->get('/manage[/{id:\d+}]',
                     )->current();
             }
 
+            /** @var FlashMessagesInterface $flashMessages */
+            $flashMessages = $request->getAttribute(FlashMessageMiddleware::FLASH_ATTRIBUTE);
+            $data = array_merge($data, $flashMessages->getFlashes());
+
             return new HtmlResponse($this->view->render('app::manage-note', $data));
         }
     }
@@ -187,8 +191,12 @@ $app->post('/manage[/{id:\d+}]',
     {
         public function handle(ServerRequestInterface $request): ResponseInterface
         {
+            /** @var FlashMessagesInterface $flashMessages */
+            $flashMessages = $request->getAttribute(FlashMessageMiddleware::FLASH_ATTRIBUTE);
+
             $this->noteInputFilter->setData($request->getParsedBody());
             if (! $this->noteInputFilter->isValid()) {
+                $flashMessages->flash('error', 'Note data was not valid');
                 return new RedirectResponse('/manage');
             }
 
@@ -199,12 +207,16 @@ $app->post('/manage[/{id:\d+}]',
                     return new RedirectResponse('/404');
                 }
 
-                $this->databaseService->update(
+                $affectedRows = $this->databaseService->update(
                     $this->noteInputFilter->getValues(),
                     [
                         'id' => $this->noteInputFilter->getValue('id')
                     ]
                 );
+                ($affectedRows === 1)
+                    ? $flashMessages->flash('message', 'Note was successfully updated')
+                    : $flashMessages->flash('error', 'Note was not updated');
+
                 return new RedirectResponse(
                     sprintf(
                         '/manage/%d',
@@ -213,7 +225,11 @@ $app->post('/manage[/{id:\d+}]',
                 );
             }
 
-            $this->databaseService->insert($this->noteInputFilter->getValues());
+            $affectedRows =$this->databaseService->insert($this->noteInputFilter->getValues());
+            ($affectedRows === 1)
+                ? $flashMessages->flash('message', 'Note was successfully created')
+                : $flashMessages->flash('error', 'Note was not created');
+
             return new RedirectResponse(
                 sprintf(
                     '/manage/%d',
@@ -233,9 +249,16 @@ $app->post('/delete', new readonly class($container) extends BaseRequest impleme
             return new RedirectResponse('/404');
         }
 
-        $this->databaseService->delete([
+        $affectedRows = $this->databaseService->delete([
             'id' => $noteId,
         ]);
+
+        /** @var FlashMessagesInterface $flashMessages */
+        $flashMessages = $request->getAttribute(FlashMessageMiddleware::FLASH_ATTRIBUTE);
+        ($affectedRows === 1)
+            ? $flashMessages->flash('message', 'Note was successfully deleted')
+            : $flashMessages->flash('error', 'Note was not deleted');
+
         return new RedirectResponse('/');
     }
 });
