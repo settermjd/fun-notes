@@ -20,7 +20,7 @@
     }
 
     h1 {
-        @apply text-6xl font-bold pt-3 mt-3;
+        @apply text-4xl md:text-6xl font-bold lg:pt-3 lg:mt-3;
     }
 
     h2 {
@@ -49,7 +49,7 @@
     }
 
     header {
-        @apply flex flex-col place-content-between gap-y-2 mt-2 text-center;
+        @apply flex flex-col place-content-between gap-y-2 lg:mt-2 text-center;
     }
 
     label {
@@ -179,7 +179,7 @@
     }
 
     .strapline {
-        @apply text-xl font-medium text-neutral-500 w-3/4 mx-auto text-center;
+        @apply text-xl font-medium text-neutral-500 w-full md:w-3/4 mx-auto text-center;
     }
 
     /*
