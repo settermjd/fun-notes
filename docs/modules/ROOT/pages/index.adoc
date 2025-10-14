@@ -1,0 +1,44 @@
+= Minimalist Notes App
+
+The app has a simple goal:
+
+> Remember the things that are important to you.
+
+== Requirements
+
+The app requires the following to run properly:
+
+* {php-url}[PHP] 8.4 or above
+* {composer-url}[Composer] installed globally
+* Docker and Docker Compose (or another containerisation technology such as Podman)
+
+== Usage
+
+=== Without a containerisation technology
+
+NOTE: The setup in this section is not designed for production usage. For that, please use a production web server, such as NGINX, Caddy, or Apache.
+
+After cloning the application source, install the application's dependencies, using Composer, by running the command below:
+
+[source,bash]
+----
+composer install
+----
+
+When the dependencies are installed, start the application using the command below.
+
+[source,bash]
+----
+composer serve
+----
+
+=== With a containerisation technology
+
+TIP: I've chosen Docker for the example below, but substitute any containerisation technology that you prefer.
+
+To setup and start the application using Docker, run the command below:
+
+[source,bash]
+----
+docker compose up -d
+----
