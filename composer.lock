@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8b8b529f585c04fc3cd8c1cc100324d3",
+    "content-hash": "b21a49cb8d265ccf453400d2bf530b73",
     "packages": [
         {
             "name": "asgrim/mini-mezzio",
@@ -3101,6 +3101,82 @@
             "time": "2023-09-22T11:17:21+00:00"
         },
         {
+            "name": "settermjd/laminas-static-pages",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/settermjd/mezzio-static-pages.git",
+                "reference": "07b6cb6cf69a299113d1d507be337ffeba8c6bee"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/settermjd/mezzio-static-pages/zipball/07b6cb6cf69a299113d1d507be337ffeba8c6bee",
+                "reference": "07b6cb6cf69a299113d1d507be337ffeba8c6bee",
+                "shasum": ""
+            },
+            "require": {
+                "laminas/laminas-config-aggregator": "^1.18.0",
+                "laminas/laminas-diactoros": "^3.6.0",
+                "laminas/laminas-stdlib": "^3.20.0",
+                "mezzio/mezzio": "^3.21.0",
+                "mezzio/mezzio-router": "^3.18",
+                "php": "~8.2.0 || ~8.3.0 || ~8.4.0"
+            },
+            "require-dev": {
+                "filp/whoops": "^2.18.3",
+                "laminas/laminas-coding-standard": "~3.1.0",
+                "laminas/laminas-development-mode": "^3.14.0",
+                "phpstan/phpstan": "^2.1.22",
+                "phpstan/phpstan-strict-rules": "^2.0.6",
+                "phpunit/phpunit": "^12.3.0",
+                "psalm/plugin-phpunit": "^0.19.5",
+                "roave/security-advisories": "dev-master",
+                "squizlabs/php_codesniffer": "^3.13.2",
+                "vimeo/psalm": "^6.13.0"
+            },
+            "suggest": {
+                "laminas/laminas-component-installer": "^2.5 for auto-enabling modules"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "laminas": {
+                    "component": "Settermjd\\LaminasStaticPages",
+                    "config-provider": "Settermjd\\StaticPages\\ConfigProvider"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Settermjd\\StaticPages\\": "src/StaticPages/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "An easy, almost painless, way to render static pages in Mezzio applications.",
+            "keywords": [
+                "http",
+                "middleware",
+                "psr",
+                "psr-15",
+                "static content",
+                "static pages"
+            ],
+            "support": {
+                "docs": "https://github.com.com/laminas-static-pages/docs",
+                "issues": "https://github.com/settermjd/laminas-static-pages/issues",
+                "source": "https://github.com/settermjd/mezzio-static-pages/tree/1.0.4"
+            },
+            "funding": [
+                {
+                    "url": "https://funding.communitybridge.org/projects/laminas-project",
+                    "type": "community_bridge"
+                }
+            ],
+            "time": "2025-08-06T01:32:34+00:00"
+        },
+        {
             "name": "symfony/deprecation-contracts",
             "version": "dev-main",
             "source": {
@@ -3997,6 +4073,7 @@
         "mezzio/mezzio-session-ext": 20,
         "php-db/phpdb": 20,
         "php-db/phpdb-adapter-sqlite": 20,
+        "settermjd/laminas-static-pages": 20,
         "twig/markdown-extra": 20
     },
     "prefer-stable": false,
