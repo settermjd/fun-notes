@@ -143,6 +143,17 @@ readonly class BaseRequest
         $this->databaseService = $this->container->get(DatabaseService::class);
         $this->noteInputFilter = $this->container->get(NoteInputFilter::class);
         $this->twig            = $this->container->get(Environment::class);
+
+        $this->twig->addRuntimeLoader(
+            new class implements RuntimeLoaderInterface { 
+                public function load(string $class) {
+                    if (MarkdownRuntime::class === $class) {
+                        return new MarkdownRuntime(new DefaultMarkdown());
+                    }
+                }
+            }
+        );
+
         $this->view            = $this->container->get(TemplateRendererInterface::class);
     }
 }
