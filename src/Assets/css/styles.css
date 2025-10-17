@@ -31,8 +31,20 @@
         @apply text-xl font-bold mb-3;
     }
 
-    p {
-        @apply text-base font-medium text-neutral-600 mb-4;
+    p, ul, li {
+        @apply text-base text-neutral-600 mb-5;
+    }
+
+    p:has(+ h2,+ h3,+ h4,+ h5,+ h6) {
+        @apply mb-7;
+    }
+
+    ul {
+        @apply list-inside ml-4;
+    }
+
+    li {
+        @apply mb-2 list-disc;
     }
 
     a {

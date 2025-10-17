@@ -19,6 +19,7 @@ use Mezzio\Flash\FlashMessageMiddleware;
 use Mezzio\Flash\FlashMessagesInterface;
 use Mezzio\Handler\NotFoundHandler;
 use Mezzio\Router\FastRouteRouter;
+use Mezzio\Router\RouterInterface;
 use Mezzio\Router\Middleware\DispatchMiddleware;
 use Mezzio\Router\Middleware\RouteMiddleware;
 use Mezzio\Session\ConfigProvider as MezzioSessionConfigProvider;
@@ -33,6 +34,7 @@ use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Settermjd\StaticPages\Handler\StaticPagesHandler;
 use Twig\Environment;
 use Twig\Extension\DebugExtension;
 use Twig\Extra\Intl\IntlExtension;
@@ -55,6 +57,7 @@ $config                                       = new ConfigAggregator([
     MezzioSessionConfigProvider::class,
     MezzioSessionExtConfigProvider::class,
     MezzioFlashConfigProvider::class,
+    Settermjd\StaticPages\ConfigProvider::class,
     new class ()
     {
         public function __invoke(): array
@@ -68,6 +71,9 @@ $config                                       = new ConfigAggregator([
                         '__main__' => [
                             __DIR__ . '/../templates/layout',
                             __DIR__ . '/../templates/app'
+                        ],
+                        'static-pages' => [
+                            __DIR__ . '/../templates/static-pages'
                         ],
                     ],
                 ],
@@ -102,6 +108,9 @@ $config                                       = new ConfigAggregator([
 $dependencies                                 = $config['dependencies'];
 $dependencies['services']['config']           = $config;
 $container                                    = new ServiceManager($dependencies);
+$container->setFactory(RouterInterface::class, static function () {
+    return new FastRouteRouter();
+});
 $container->setService(
     DatabaseService::class,
     new DatabaseService(
@@ -115,11 +124,10 @@ $container->setService(
     NoteInputFilter::class,
     $pluginManager->get(NoteInputFilter::class)
 );
-$router = new FastRouteRouter();
-$app = AppFactory::create($container, $router);
+$app = AppFactory::create($container, $container->get(RouterInterface::class));
 $app->pipe(SessionMiddleware::class);
 $app->pipe(FlashMessageMiddleware::class);
-$app->pipe(new RouteMiddleware($router));
+$app->pipe(new RouteMiddleware($container->get(RouterInterface::class)));
 $app->pipe(DispatchMiddleware::class);
 $app->pipe(NotFoundHandler::class);
 
@@ -140,6 +148,9 @@ readonly class BaseRequest
 }
 
 $app->get('/404', NotFoundHandler::class);
+
+// Static pages
+$app->get('/about', StaticPagesHandler::class, 'static.about');
 
 // View all notes paginated (sorted and filtered if desired)
 $app->get('/[{page:\d+}[/{sort:\d+}[/{category:\d+}]]]',

@@ -1,0 +1,27 @@
+{% extends "default.html.twig" %}
+
+{% block title %}About{% endblock %}
+
+{% block content %}
+<section class="my-6 w-3/4 mx-auto">
+    {% apply markdown_to_html %}
+    ## About
+
+    Minimalist Note was built for one reason: <q class="font-bold">to remember the important things</q>.
+
+    To that end, the app has a minimalist (you could almost say spartan) design, so that there are no distractions creating notes about the important things to you.
+    No feature has been — or will be — added that distracts from that.
+
+    ### Why Was Minimalist Note Built?
+
+        Minimalist Note came about because I was keen to build a web app to maintain and grow my web development skills, as well as my UI/UX design and colour theory knowledge.
+
+    What's more, I wanted to build something that helped me scratch a proverbial itch: writing things down and remembering them quickly and easily. The app had a few goals to meet:
+
+    - Do only what it needed to do
+    - Respect my design aesthetic; that being simple, minimalist, and efficient
+
+    I didn't want an app to have features either just for the sake of them, or to be added to grow users or sales. For the longest time, I've loathed that aspect commercial software often adds features just to grow sales and gain new customers, features that don't really add any — **if any** — value. 
+    {% endapply %}
+</section>
+{% endblock %}

@@ -13,6 +13,7 @@
         "mezzio/mezzio-twigrenderer": "^2.17",
         "php-db/phpdb": "dev-x.x.2",
         "php-db/phpdb-adapter-sqlite": "0.1.x-dev",
+        "settermjd/laminas-static-pages": "dev-main",
         "twig/intl-extra": "^3.21",
         "twig/markdown-extra": "4.x-dev",
         "twilio/sdk": "^8.7",
