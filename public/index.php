@@ -149,6 +149,9 @@ readonly class BaseRequest
 
 $app->get('/404', NotFoundHandler::class);
 
+// Static pages
+$app->get('/about', StaticPagesHandler::class, 'static.about');
+
 // View all notes paginated (sorted and filtered if desired)
 $app->get('/[{page:\d+}[/{sort:\d+}[/{category:\d+}]]]',
     new readonly class($container) extends BaseRequest implements RequestHandlerInterface {
